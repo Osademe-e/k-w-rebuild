@@ -1,0 +1,18 @@
+.details__main--body > p {
+  margin: 10px 0;
+}
+
+.details__main--body a {
+  color: #edd437;
+}
+
+.details__main--body a:hover {
+  text-decoration: underline;
+}
+
+@media (min-width: 1024px) {
+  .details__main > img {
+    position: relative;
+    top: -30px;
+  }
+}

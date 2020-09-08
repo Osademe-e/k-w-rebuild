@@ -1,0 +1,52 @@
+/* .card {
+  background: url(https://selimdoyranli.com/cdn/fut-player-card/img/card_bg.png),
+    #dddddd;
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 250px;
+  height: 385px;
+} */
+
+/* Player card  */
+
+.card {
+  height: 17rem;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+  border-bottom-right-radius: 100%;
+  border-bottom-left-radius: 100%;
+  background: url('../../assets/images/bg-trimmed-1.png');
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background: #edd437;
+  opacity: 0.3;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+  border-bottom-right-radius: 100%;
+  border-bottom-left-radius: 100%;
+}
+
+.card .p {
+  left: 10px;
+}
+
+.card .image-display {
+  height: 50%;
+  overflow: hidden;
+}
+
+.card .info {
+  columns: 2;
+  column-rule: 2px double #f4e587;
+}

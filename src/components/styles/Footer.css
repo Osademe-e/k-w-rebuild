@@ -1,0 +1,6 @@
+.social-links {
+  background: url('../../assets/images/bg-trimmed-1.png') no-repeat center;
+  background-size: cover;
+  background-color: rgba(22, 22, 22, 0.5);
+  background-blend-mode: darken;
+}

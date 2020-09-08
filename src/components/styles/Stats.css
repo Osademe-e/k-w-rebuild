@@ -1,0 +1,26 @@
+.field-wrapper {
+  width: 15rem;
+  height: 10rem;
+}
+
+.field {
+  background: url('../../assets/images/pitch.png');
+  background-position: center center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.field > span {
+  font-size: 8px;
+}
+
+/* @media (min-width: 1024px) {
+  .field {
+    background-size: cover;
+    width: 100%;
+    height: 624px;
+  }
+} */
