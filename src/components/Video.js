@@ -21,7 +21,7 @@ const Video = ({ video, deleteVideo, videoId }) => {
           </motion.p>
           <small>Uploaded: {moment(video?.updatedAt).fromNow()}</small>
         </div>
-        {user.uid === id && (
+        {user?.uid === id && (
           <span
             className="material-icons shadow-lg text-red-600 cursor-pointer"
             onClick={() => deleteVideo(videoId)}>

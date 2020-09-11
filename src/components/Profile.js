@@ -118,7 +118,7 @@ const Profile = ({ profile }) => {
       <div className="flex justify-between items-center">
         <div className="pb-2 border-b border-gray-200">
           <h1 className="uppercase font-semibold text-sm">Profile</h1>
-          {user.uid === id && (
+          {user?.uid === id && (
             <p className="text-xs opacity-75">
               Updated:{' '}
               {moment(
@@ -129,7 +129,7 @@ const Profile = ({ profile }) => {
             </p>
           )}
         </div>
-        {!editting && user.uid === id && (
+        {!editting && user?.uid === id && (
           <span
             className="material-icons shadow-lg text-secondary cursor-pointer"
             onClick={() => setEditting((prevState) => !prevState)}>
@@ -181,11 +181,7 @@ const Profile = ({ profile }) => {
                 <motion.div layout className={`form-control`}>
                   <label
                     htmlFor="email"
-                    className={`${
-                      !editting
-                        ? 'text-sm font-semibold mb-2 text-primary-900'
-                        : 'label'
-                    }`}>
+                    className={`${'text-sm font-semibold mb-2 text-primary-900'}`}>
                     <div className="flex items-center">
                       <i className="material-icons mr-1">email</i>
                       Email
@@ -197,7 +193,7 @@ const Profile = ({ profile }) => {
                     type="email"
                     disabled={true}
                     className={`
-                      'appearance-none w-full py-2 px-2 outline-none text-xs'
+                      appearance-none w-full py-2 px-2 outline-none text-xs
                        `}
                     placeholder="example@gmail.com"
                     {...profileForm.getFieldProps('email')}

@@ -12,40 +12,43 @@ const useFirestoreCollection = (collection) => {
     setError(null);
     setFetching(true);
     console.log(collection);
-    const unsub = kingsportFirestore.collection(collection).onSnapshot(
-      (querySnapshot) => {
-        let ordered = [];
-        let data = {};
+    let unsub;
+    if (collection) {
+      unsub = kingsportFirestore.collection(collection).onSnapshot(
+        (querySnapshot) => {
+          let ordered = [];
+          let data = {};
 
-        if (querySnapshot.size > 0) {
-          querySnapshot.forEach((doc) => {
-            ordered.push({
-              id: doc.id,
-              ...doc.data(),
-            });
-
-            data = {
-              ...data,
-              [doc.id]: {
+          if (querySnapshot.size > 0) {
+            querySnapshot.forEach((doc) => {
+              ordered.push({
+                id: doc.id,
                 ...doc.data(),
-              },
-            };
-          });
-          setOrdered(ordered);
-          setData(data);
-          setFetching(false);
-        } else {
-          setOrdered(ordered);
-          setData(data);
+              });
+
+              data = {
+                ...data,
+                [doc.id]: {
+                  ...doc.data(),
+                },
+              };
+            });
+            setOrdered(ordered);
+            setData(data);
+            setFetching(false);
+          } else {
+            setOrdered(ordered);
+            setData(data);
+            setFetching(false);
+          }
+        },
+        (error) => {
+          console.log(error);
+          setError(error);
           setFetching(false);
         }
-      },
-      (error) => {
-        console.log(error);
-        setError(error);
-        setFetching(false);
-      }
-    );
+      );
+    }
     // setFetching(true);
     // kingsportFirestore
     //   .collection(collection)
@@ -77,7 +80,9 @@ const useFirestoreCollection = (collection) => {
     //   });
 
     return () => {
-      unsub();
+      if (unsub) {
+        unsub();
+      }
     };
   }, [collection]);
 

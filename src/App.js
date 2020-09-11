@@ -17,6 +17,7 @@ import Loader from './components/Loader';
 import EditCommentForm from './components/EditCommentForm';
 import ReplyForm from './components/ReplyForm';
 import EditReplyForm from './components/EditReplyForm';
+import EditScoutCommentForm from './components/EditScoutCommentForm';
 
 // pages
 import HomePage from './pages/Home';
@@ -34,6 +35,7 @@ import NotFound from './pages/NotFound';
 import VerifyEmail from './pages/VerifyEmail';
 import TalentSignupPage from './pages/TalentSignup';
 import TalentDashboardPage from './pages/TalentDashboard';
+import ScoutSignupPage from './pages/ScoutSignup';
 
 // context API to make some application state globally accessible (works like redux)
 export const AppContext = React.createContext({
@@ -83,6 +85,7 @@ function App() {
     message: null,
     comment: null,
     reply: null,
+    scoutComment: null,
   });
 
   // initial toast state
@@ -184,6 +187,11 @@ function App() {
                   path="/register"
                   render={(props) => <SignupPage {...props} />}
                 />
+
+                {/* ScoutSignupPage */}
+                <PrivateRoute exact path="/scout-signup" user={user}>
+                  <ScoutSignupPage />
+                </PrivateRoute>
 
                 {/* talentSignup */}
                 <PrivateRoute exact path="/talent-signup" user={user}>
@@ -298,6 +306,11 @@ function App() {
 
           {/* edit reply comment */}
           {openModal.component === 'edit reply' && <EditReplyForm />}
+
+          {/* edit scout comment */}
+          {openModal.component === 'edit scout comment' && (
+            <EditScoutCommentForm />
+          )}
         </Modal>
       ) : null}
 

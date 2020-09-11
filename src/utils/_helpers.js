@@ -232,3 +232,62 @@ export const getAlignment = (pos) => {
 
 export const trailingZero = (num) =>
   num.toString().length === 1 ? `0${num}` : num;
+
+export const progressColor = (score) => {
+  let colors = ['gray', 'red', 'orange', 'yellow', 'blue', 'green'];
+
+  if (score <= 39) return colors[1];
+
+  if (score > 39 && score <= 44) return colors[2];
+
+  if (score > 44 && score <= 54) return colors[3];
+
+  if (score > 54 && score <= 79) return colors[4];
+
+  if (score > 79 && score <= 100) return colors[5];
+
+  return colors[0];
+};
+
+export const abilityTextReadable = (ability) => {
+  switch (ability) {
+    case 'attack':
+      return 'Attack';
+    case 'speed':
+      return 'Speed';
+    case 'heading':
+      return 'Heading';
+    case 'passing':
+      return 'Passing';
+    case 'shooting':
+      return 'Shooting';
+    case 'strength':
+      return 'Strength';
+    case 'vision':
+      return 'Vision';
+    case 'dribbling':
+      return 'Dribbling';
+    case 'marking':
+      return 'Marking';
+    case 'technique':
+      return 'Technique';
+    case 'positioning':
+      return 'Positioning';
+    case 'crossing':
+      return 'Crossing';
+    case 'setPieces':
+      return 'Set Pieces';
+    case 'flair':
+      return 'Flair';
+    case 'conversationRate':
+      return 'Conversation Rate';
+    case 'shortPass':
+      return 'Short Pass';
+    case 'longPass':
+      return 'Long Pass';
+    case 'transition':
+      return 'Transition';
+    default:
+      return 'Defense';
+  }
+};

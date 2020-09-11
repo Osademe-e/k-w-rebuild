@@ -130,7 +130,7 @@ const Stats = ({ stats }) => {
         <motion.div layout className="flex justify-between items-center">
           <div className="pb-2 border-b border-gray-200">
             <h1 className="uppercase font-semibold text-sm">Stats</h1>
-            {user.uid === id && (
+            {user?.uid === id && (
               <p className="text-xs opacity-75">
                 Updated:{' '}
                 {moment(
@@ -142,7 +142,7 @@ const Stats = ({ stats }) => {
             )}
           </div>
 
-          {!editting && user.uid === id && (
+          {!editting && user?.uid === id && (
             <motion.span
               layout
               className="material-icons shadow-lg text-secondary cursor-pointer"

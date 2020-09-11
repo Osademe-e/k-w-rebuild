@@ -175,7 +175,7 @@ const TalentDashboard = () => {
                   className="w-full h-64 object-cover object-top"
                 />
 
-                {user.uid === doc?.id && (
+                {user?.uid === doc?.id && (
                   <div className="p-2 flex justify-between items-center">
                     <span className="text-xs font-semibold">
                       Created:{' '}

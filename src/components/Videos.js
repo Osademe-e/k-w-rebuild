@@ -209,7 +209,7 @@ const Videos = ({ stats }) => {
               Videos
             </motion.h1>
             {!showVideoForm &&
-              user.uid === id &&
+              user?.uid === id &&
               Object.keys(stats.videos).length < 5 && (
                 <motion.span
                   layout

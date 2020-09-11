@@ -104,7 +104,7 @@ const Biometrics = ({ biometrics }) => {
       <div className="flex justify-between items-center">
         <div className="pb-2 border-b border-gray-200">
           <h1 className="uppercase font-semibold text-sm">Biometrics</h1>
-          {user.uid === id && (
+          {user?.uid === id && (
             <p className="text-xs opacity-75">
               Updated:{' '}
               {moment(
@@ -115,7 +115,7 @@ const Biometrics = ({ biometrics }) => {
             </p>
           )}
         </div>
-        {!editting && user.uid === id && (
+        {!editting && user?.uid === id && (
           <span
             className="material-icons shadow-lg text-secondary cursor-pointer"
             onClick={() => setEditting((prevState) => !prevState)}>
