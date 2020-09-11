@@ -82,8 +82,6 @@ const Talents = () => {
                 {error && <PageError message={errorDisplayHandler(error)} />}
               </div>
             </div>
-
-            <aside className="hidden lg:block">hello</aside>
           </div>
         )}
       </main>

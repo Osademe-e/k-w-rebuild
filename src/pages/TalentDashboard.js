@@ -160,11 +160,11 @@ const TalentDashboard = () => {
       <div className="lg:container mx-auto px-2 lg:px-0">
         {doc && (
           <div className="lg:flex">
-            <section className="w-full lg:w-1/4">
+            <section className="w-full lg:w-1/4  mt-4">
               <div
-                className="bg-white shadow rounded overflow-hidden relative"
+                className="bg-white shadow rounded overflow-hidden relative mb-4"
                 style={{
-                  top: '-30px',
+                  // top: '-30px',
                 }}>
                 <h2 className="font-semibold px-2 py-3 border-b border-gray-200 ">
                   {doc?.profile?.fullName}
@@ -203,11 +203,11 @@ const TalentDashboard = () => {
             </section>
             <section className="flex-1 mt-5 lg:mt-4 mx-0 lg:mx-5">
               <Review review={doc?.adminReview} />
-              <ScoutComments comments={doc?.scoutComments} />
               <Stats stats={doc.stats} />
             </section>
             <section className="w-full lg:w-1/3 mt-4">
               <Videos stats={doc.stats} />
+              <ScoutComments comments={doc?.scoutComments} />
             </section>
           </div>
         )}
