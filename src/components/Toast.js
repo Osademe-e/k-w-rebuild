@@ -21,7 +21,7 @@ const Toast = () => {
   return (
     <AnimatePresence>
       <motion.div
-        className="fixed p-2 mx-2 lg:mx-0 rounded text-sm lg:text-base max-w-screen-sm bg-primary-500 font-bold text-primary-900 flex items-center justify-between"
+        className="fixed p-2 mx-2 lg:mx-0 rounded text-sm lg:text-base max-w-screen-sm bg-gray-800 font-bold text-primary-100 flex items-center justify-between"
         variants={toastAnim}
         initial="hidden"
         animate="visible"

@@ -37,25 +37,25 @@ const Review = ({ review }) => {
   // form
   const reviewForm = useFormik({
     initialValues: {
-      defense: review?.defense || 0,
-      attack: review?.attack || 0,
-      speed: review?.speed || 0,
-      heading: review?.heading || 0,
-      passing: review?.passing || 0,
-      shooting: review?.shooting || 0,
-      strength: review?.strength || 0,
-      vision: review?.vision || 0,
-      dribbling: review?.dribbling || 0,
-      marking: review?.marking || 0,
-      technique: review?.technique || 0,
-      positioning: review?.positioning || 0,
-      crossing: review?.crossing || 0,
-      setPieces: review?.setPieces || 0,
-      flair: review?.flair || 0,
-      conversationRate: review?.conversationRate || 0,
-      shortPass: review?.shortPass || 0,
-      longPass: review?.longPass || 0,
-      transition: review?.transition || 0,
+      defense: review?.defense || '',
+      attack: review?.attack || '',
+      speed: review?.speed || '',
+      heading: review?.heading || '',
+      passing: review?.passing || '',
+      shooting: review?.shooting || '',
+      strength: review?.strength || '',
+      vision: review?.vision || '',
+      dribbling: review?.dribbling || '',
+      marking: review?.marking || '',
+      technique: review?.technique || '',
+      positioning: review?.positioning || '',
+      crossing: review?.crossing || '',
+      setPieces: review?.setPieces || '',
+      flair: review?.flair || '',
+      conversationRate: review?.conversationRate || '',
+      shortPass: review?.shortPass || '',
+      longPass: review?.longPass || '',
+      transition: review?.transition || '',
     },
     validationSchema: yup.object({
       defense: yup.number().min(0).max(100).positive().integer(),
@@ -82,13 +82,15 @@ const Review = ({ review }) => {
       let changed = false;
 
       // check if any input field was changed
-      Object.keys(values).forEach((key) => {
-        if (review[key] !== values[key]) {
-          changed = true;
-        }
-      });
+      if (review) {
+        Object.keys(values).forEach((key) => {
+          if (review[key] !== values[key]) {
+            changed = true;
+          }
+        });
+      }
 
-      if (changed) {
+      if (!review || (review && changed)) {
         try {
           let update = {
             ...values,

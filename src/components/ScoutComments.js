@@ -50,18 +50,24 @@ const ScoutComments = ({ comments }) => {
     onSubmit: async (values, { resetForm }) => {
       setError('');
       try {
-        await firestore
-          .collection('talents')
-          .doc(id)
-          .update({
-            scoutComments: {
+        let scoutComments = comments
+          ? {
               ...comments,
               [user.uid]: {
                 ...values,
                 updatedAt: timestamp(),
               },
-            },
-          });
+            }
+          : {
+              [user.uid]: {
+                ...values,
+                updatedAt: timestamp(),
+              },
+            };
+
+        await firestore.collection('talents').doc(id).update({
+          scoutComments,
+        });
         resetForm();
         setShowForm((prevState) => !prevState);
       } catch (error) {
