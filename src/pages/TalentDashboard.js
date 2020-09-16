@@ -16,6 +16,7 @@ import Stats from '../components/Stats';
 import Biometrics from '../components/Biometrics';
 import Review from '../components/Review';
 import ScoutComments from '../components/ScoutComments';
+import HeatMap from '../components/HeatMap';
 
 // hooks
 import useFirestoreDoc from '../hooks/useFirestoreDoc';
@@ -163,9 +164,11 @@ const TalentDashboard = () => {
             <section className="w-full lg:w-1/4  mt-4">
               <div
                 className="bg-white shadow rounded overflow-hidden relative mb-4"
-                style={{
-                  // top: '-30px',
-                }}>
+                style={
+                  {
+                    // top: '-30px',
+                  }
+                }>
                 <h2 className="font-semibold px-2 py-3 border-b border-gray-200 ">
                   {doc?.profile?.fullName}
                 </h2>
@@ -207,6 +210,7 @@ const TalentDashboard = () => {
             </section>
             <section className="w-full lg:w-1/3 mt-4">
               <Videos stats={doc.stats} />
+              <HeatMap position={doc.stats.position} />
               <ScoutComments comments={doc?.scoutComments} />
             </section>
           </div>

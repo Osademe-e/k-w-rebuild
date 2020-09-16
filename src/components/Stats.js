@@ -4,7 +4,6 @@ import { useParams } from 'react-router-dom';
 import * as yup from 'yup';
 import moment from 'moment';
 import { motion, AnimatePresence, AnimateSharedLayout } from 'framer-motion';
-import './styles/Stats.css';
 
 // context
 import { AppContext } from '../App';
@@ -19,8 +18,6 @@ import FormError from './FormError';
 import {
   errorDisplayHandler,
   getPositionAbbrev,
-  getGeneralPosition,
-  getAlignment,
 } from '../utils/_helpers';
 
 // config
@@ -152,52 +149,6 @@ const Stats = ({ stats }) => {
           )}
         </motion.div>
         <motion.div layout className="py-3">
-          <motion.div
-            layout
-            className="flex items-center justify-between font-semibold text-xs">
-            <motion.h2 layout className="uppercase">
-              Playing Style
-            </motion.h2>
-            <motion.span layout className="text-xs">
-              {getGeneralPosition(getPositionAbbrev(stats.position))}
-            </motion.span>
-          </motion.div>
-          <motion.div layout className="grid justify-center">
-            <div className="field-wrapper border border-green-600 my-3">
-              <div className="field">
-                {[
-                  'Goalkeeper',
-                  'Centre Back',
-                  'Sweeper',
-                  'Left Back',
-                  'Right Back',
-                  'Left Wing Back',
-                  'Right Wing Back',
-                  'Centre Midfield',
-                  'Defensive Midfield',
-                  'Attacking Midfield',
-                  'Left Midfield',
-                  'Right Midfield',
-                  'Centre Forward',
-                  'Second Striker',
-                  'Left Winger',
-                  'Right Winger',
-                ].map((pos, i) => (
-                  <span
-                    key={i}
-                    className={`absolute ${
-                      pos === stats.position
-                        ? 'font-semibold text-primary-900 rounded-full bg-primary-500 p-1'
-                        : 'text-white'
-                    }`}
-                    style={getAlignment(getPositionAbbrev(pos))}>
-                    {getPositionAbbrev(pos)}
-                  </span>
-                ))}
-              </div>
-            </div>
-          </motion.div>
-
           <AnimatePresence>
             <motion.div layout className={` py-2 w-full`}>
               <motion.form layout onSubmit={statsForm.handleSubmit}>

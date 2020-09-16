@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import useFirebase from './hooks/useFirebase';
 import useFilters from './hooks/useFilters';
 import useFirestoreDoc from './hooks/useFirestoreDoc';
+import useFirestoreCollection from './hooks/useFirestoreCollection';
 
 // components imports
 import Header from './components/Header';
@@ -18,6 +19,8 @@ import EditCommentForm from './components/EditCommentForm';
 import ReplyForm from './components/ReplyForm';
 import EditReplyForm from './components/EditReplyForm';
 import EditScoutCommentForm from './components/EditScoutCommentForm';
+import MatchInfo from './components/MatchInfo';
+import ResultsPage from './components/Results';
 
 // pages
 import HomePage from './pages/Home';
@@ -36,10 +39,12 @@ import VerifyEmail from './pages/VerifyEmail';
 import TalentSignupPage from './pages/TalentSignup';
 import TalentDashboardPage from './pages/TalentDashboard';
 import ScoutSignupPage from './pages/ScoutSignup';
+import FixturesPage from './pages/Fixtures';
 
 // context API to make some application state globally accessible (works like redux)
 export const AppContext = React.createContext({
   user: null,
+  leagues: null,
   authLoaded: false,
   profile: {
     fetching: true,
@@ -86,6 +91,7 @@ function App() {
     comment: null,
     reply: null,
     scoutComment: null,
+    fixture: null,
   });
 
   // initial toast state
@@ -113,6 +119,9 @@ function App() {
     user && user.uid
   );
 
+  const leagues = useFirestoreCollection('leagues');
+  // console.log(leagues)
+
   // fetch tallents from firestore
   const { ordered: featuredTalents } = useFilters(
     'talents',
@@ -128,6 +137,7 @@ function App() {
     <AppContext.Provider
       value={{
         user,
+        leagues,
         authLoaded,
         toogleModal,
         toogleToast,
@@ -233,6 +243,20 @@ function App() {
                   render={(props) => <NewsPage {...props} />}
                 />
 
+                {/* fixtures page */}
+                <Route
+                  exact
+                  path="/fixtures"
+                  render={(props) => <FixturesPage {...props} />}
+                />
+
+                {/* results page */}
+                <Route
+                  exact
+                  path="/results"
+                  render={(props) => <ResultsPage {...props} />}
+                />
+
                 {/* forum details page */}
                 <Route
                   exact
@@ -311,6 +335,9 @@ function App() {
           {openModal.component === 'edit scout comment' && (
             <EditScoutCommentForm />
           )}
+
+          {/* match info */}
+          {openModal.component === 'match info' && <MatchInfo />}
         </Modal>
       ) : null}
 

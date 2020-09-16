@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 // firebase error message handler
 export const errorDisplayHandler = (error) => {
   if (error.code) {
@@ -289,5 +291,57 @@ export const abilityTextReadable = (ability) => {
       return 'Transition';
     default:
       return 'Defense';
+  }
+};
+
+// update league
+export const updateLeague = (reqData, cb) => {
+  axios({
+    method: 'post',
+    url: `/resolveAccountNumber`,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: {
+      ...reqData,
+    },
+  })
+    .then(({ data: { message } }) => {
+      return cb(message);
+    })
+    .catch((error) => {
+      if (error.response) {
+        cb(error.response.data.message);
+      } else if (error.request) {
+        cb(error.request);
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        cb(error.message);
+      }
+    });
+};
+
+export const leagueColor = (leagueName) => {
+  switch (leagueName) {
+    case 'Premier League':
+      return {
+        backgroundColor: '#3f1152',
+        color: '#fff1f8',
+      };
+    case 'Championship':
+      return {
+        backgroundColor: '#999999',
+        color: '#fefcf4',
+      };
+    case 'Primera Division':
+      return {
+        backgroundColor: '#013473',
+        color: '#ffefe5',
+      };
+    default:
+      return {
+        backgroundColor: '',
+        color: '',
+      };
   }
 };

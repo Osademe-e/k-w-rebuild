@@ -37,7 +37,6 @@ const ScoutComments = ({ comments }) => {
   const { data } = useFirestoreCollection(
     comments && Object.keys(comments).length > 0 ? 'scouts' : null
   );
-  console.log(data);
 
   // scout comment form handler
   const scoutCommentForm = useFormik({
@@ -56,12 +55,14 @@ const ScoutComments = ({ comments }) => {
               [user.uid]: {
                 ...values,
                 updatedAt: timestamp(),
+                firstName: profile.doc.firstName,
               },
             }
           : {
               [user.uid]: {
                 ...values,
                 updatedAt: timestamp(),
+                firstName: profile.doc.firstName,
               },
             };
 
@@ -218,9 +219,11 @@ const ScoutComments = ({ comments }) => {
                         </small>
                       </div>
                     </div>
-                    <div className="pt-3 border-t border-gray-100 text-sm">
-                      {comments[scoutId].comment}
-                    </div>
+                    <div
+                      className="pt-3 border-t border-gray-100 text-sm"
+                      dangerouslySetInnerHTML={{
+                        __html: comments[scoutId].comment,
+                      }}></div>
                     {user?.uid === scoutId && (
                       <div className="flex items-center justify-evenly text-xs border-t border-gray-100 pt-3 mt-3">
                         <span
