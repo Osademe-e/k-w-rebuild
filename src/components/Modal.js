@@ -26,6 +26,8 @@ const Modal = ({ children }) => {
           message: null,
           comment: null,
           reply: null,
+          scoutComment: null,
+          fixture: null,
         });
       }
     }
