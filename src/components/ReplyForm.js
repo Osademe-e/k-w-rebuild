@@ -84,42 +84,40 @@ const RelpyForm = () => {
   });
 
   return (
-    <AnimatePresence>
-      <motion.div
-        variants={replyFormVariants}
-        initial="hidden"
-        animate="visible"
-        exit="hidden"
-        className="absolute w-full">
-        <div className=" w-full lg:w-1/2 lg:mx-auto rounded-t px-2 py-4 bg-white">
-          <form onSubmit={formik.handleSubmit}>
-            <div className="form-control">
-              <label htmlFor="reply" className="label">
-                Reply Comment
-              </label>
-              <textarea
-                name="reply"
-                id="reply"
-                rows="2"
-                className="input-field focus:border focus:border-primary-900 placeholder-primary-800 placeholder-opacity-25"
-                placeholder="reply comment..."
-                {...formik.getFieldProps('reply')}></textarea>
+    <motion.div
+      variants={replyFormVariants}
+      initial="hidden"
+      animate="visible"
+      exit="hidden"
+      className="absolute w-full">
+      <div className=" w-full lg:w-1/2 lg:mx-auto rounded-t px-2 py-4 bg-white">
+        <form onSubmit={formik.handleSubmit}>
+          <div className="form-control">
+            <label htmlFor="reply" className="label">
+              Reply Comment
+            </label>
+            <textarea
+              name="reply"
+              id="reply"
+              rows="2"
+              className="input-field focus:border focus:border-primary-900 placeholder-primary-800 placeholder-opacity-25"
+              placeholder="reply comment..."
+              {...formik.getFieldProps('reply')}></textarea>
 
-              {formik.touched.reply && formik.errors.reply ? (
-                <FormError error={formik.errors.reply} />
-              ) : null}
-            </div>
+            {formik.touched.reply && formik.errors.reply ? (
+              <FormError error={formik.errors.reply} />
+            ) : null}
+          </div>
 
-            <input
-              value={formik.isSubmitting ? 'Submitting...' : 'Submit'}
-              type="submit"
-              disabled={formik.isSubmitting}
-              className="btn bg-secondary text-white text-xs lg:text-sm mx-2"
-            />
-          </form>
-        </div>
-      </motion.div>
-    </AnimatePresence>
+          <input
+            value={formik.isSubmitting ? 'Submitting...' : 'Submit'}
+            type="submit"
+            disabled={formik.isSubmitting}
+            className="btn bg-secondary text-white text-xs lg:text-sm mx-2"
+          />
+        </form>
+      </div>
+    </motion.div>
   );
 };
 

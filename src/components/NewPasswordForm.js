@@ -22,20 +22,15 @@ import './styles/Forms.css';
 // animation
 const pFormAnim = {
   hidden: {
-    y: '-100vh',
     opacity: 0,
-    transition: {
-      duration: 0.1,
-    },
   },
   visible: {
-    y: 0,
     opacity: 1,
     transition: { delay: 0.2, duration: 0.1 },
   },
 };
 
-const ForgotPasswordForm = () => {
+const OldPasswordForm = () => {
   // get modal and toast from context
   const { toogleModal, toogleToast } = useContext(AppContext);
 
@@ -49,26 +44,25 @@ const ForgotPasswordForm = () => {
   const formik = useFormik({
     // form fields
     initialValues: {
-      email: '',
+      newPassword: '',
     },
     // for validating fields
     validationSchema: yup.object({
-      email: yup.string().email('Invalid email address').required('Required'),
+      newPassword: yup.string().required('Required'),
     }),
-    onSubmit: async ({ email }) => {
+    onSubmit: async ({ newPassword }) => {
       setError('');
       try {
-        // send reset email
-        await auth().sendPasswordResetEmail(email);
+        const user = auth().currentUser;
+
+        await user.updatePassword(newPassword);
+
         toogleModal({
           open: false,
           component: '',
         });
-        toogleToast(`A password reset email has been sent to ${email}.`);
+        toogleToast(`Password changed.`);
       } catch (error) {
-        if (error.code === 'auth/user-not-found') {
-          return setError(error.message);
-        }
         setError(errorDisplayHandler(error));
       }
     },
@@ -80,7 +74,7 @@ const ForgotPasswordForm = () => {
       variants={pFormAnim}
       exit="hidden">
       <h1 className="px-2 border-b border-gray-200 text-base lg:text-2xl py-4 flex items-center justify-between">
-        <span>Enter Your Email Address</span>
+        <span>Enter Your New Password</span>
         <span
           className="cursor-pointer material-icons"
           onClick={(e) => toogleModal({ open: false, component: '' })}>
@@ -90,18 +84,18 @@ const ForgotPasswordForm = () => {
       {error !== '' ? <FormError error={error} /> : null}
       <form onSubmit={formik.handleSubmit} className="my-2">
         <div className="form-control">
-          <label htmlFor="email" className="label">
-            Email
+          <label htmlFor="newPassword" className="label">
+            Password
           </label>
           <input
-            id="email"
-            name="email"
-            type="email"
+            id="newPassword"
+            name="newPassword"
+            type="password"
             className="input-field"
-            {...formik.getFieldProps('email')}
+            {...formik.getFieldProps('newPassword')}
           />
-          {formik.touched.email && formik.errors.email ? (
-            <FormError error={formik.errors.email} />
+          {formik.touched.newPassword && formik.errors.newPassword ? (
+            <FormError error={formik.errors.newPassword} />
           ) : null}
         </div>
         <input
@@ -115,4 +109,4 @@ const ForgotPasswordForm = () => {
   );
 };
 
-export default ForgotPasswordForm;
+export default OldPasswordForm;

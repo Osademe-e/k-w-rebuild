@@ -8,9 +8,15 @@ const toastAnim = {
   hidden: {
     top: '30%',
     left: '-100vh',
+    transition: {
+      duration: 0.1,
+    },
   },
   visible: {
     left: 10,
+    transition: {
+      duration: 0.1,
+    },
   },
 };
 

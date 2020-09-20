@@ -231,6 +231,320 @@ export const getAlignment = (pos) => {
       };
   }
 };
+export const generateHeatMap = (pos) => {
+  let y = 0;
+  let x = 0;
+
+  let yPoints = [];
+  let xPoints = [];
+  switch (pos) {
+    case 'CB':
+      y = 0.5;
+      x = 0.1;
+
+      yPoints = [];
+      xPoints = [];
+
+      for (let i = y - 0.2; i <= y + 0.2; i += 0.02) {
+        yPoints.push(i);
+      }
+
+      for (let i = x - 0.1; i <= x + 0.1; i += 0.02) {
+        xPoints.push(i);
+      }
+
+      return {
+        x: xPoints,
+        y: yPoints,
+      };
+
+    case 'SW':
+      y = 0.5;
+      x = 0.05;
+
+      yPoints = [];
+      xPoints = [];
+
+      for (let i = y - 0.2; i <= y + 0.2; i += 0.02) {
+        yPoints.push(i);
+      }
+
+      for (let i = x - 0.02; i <= x + 0.15; i += 0.02) {
+        xPoints.push(i);
+      }
+
+      return {
+        x: xPoints,
+        y: yPoints,
+      };
+    case 'RB':
+      y = 0.75;
+      x = 0.1;
+
+      yPoints = [];
+      xPoints = [];
+
+      for (let i = y - 0.2; i <= y + 0.1; i += 0.02) {
+        yPoints.push(i);
+      }
+
+      for (let i = x - 0.1; i <= x + 0.3; i += 0.02) {
+        xPoints.push(i);
+      }
+
+      return {
+        x: xPoints,
+        y: yPoints,
+      };
+    case 'LB':
+      y = 0.25;
+      x = 0.1;
+
+      yPoints = [];
+      xPoints = [];
+
+      for (let i = y - 0.1; i <= y + 0.2; i += 0.02) {
+        yPoints.push(i);
+      }
+
+      for (let i = x - 0.1; i <= x + 0.3; i += 0.02) {
+        xPoints.push(i);
+      }
+
+      return {
+        x: xPoints,
+        y: yPoints,
+      };
+    case 'LWB':
+      y = 0.25;
+      x = 0.3;
+
+      yPoints = [];
+      xPoints = [];
+
+      for (let i = y - 0.1; i <= y + 0.2; i += 0.02) {
+        yPoints.push(i);
+      }
+
+      for (let i = x - 0.3; i <= x + 0.4; i += 0.02) {
+        xPoints.push(i);
+      }
+
+      return {
+        x: xPoints,
+        y: yPoints,
+      };
+    case 'RWB':
+      y = 0.75;
+      x = 0.3;
+
+      yPoints = [];
+      xPoints = [];
+
+      for (let i = y - 0.2; i <= y + 0.1; i += 0.02) {
+        yPoints.push(i);
+      }
+
+      for (let i = x - 0.3; i <= x + 0.4; i += 0.02) {
+        xPoints.push(i);
+      }
+
+      return {
+        x: xPoints,
+        y: yPoints,
+      };
+    case 'DM':
+      y = 0.5;
+      x = 0.4;
+
+      yPoints = [];
+      xPoints = [];
+
+      for (let i = y - 0.1; i <= y + 0.1; i += 0.02) {
+        yPoints.push(i);
+      }
+
+      for (let i = x - 0.3; i <= x + 0.1; i += 0.02) {
+        xPoints.push(i);
+      }
+
+      return {
+        x: xPoints,
+        y: yPoints,
+      };
+    case 'CM':
+      y = 0.5;
+      x = 0.5;
+
+      yPoints = [];
+      xPoints = [];
+
+      for (let i = y - 0.2; i <= y + 0.2; i += 0.01) {
+        yPoints.push(i);
+      }
+
+      for (let i = x - 0.1; i <= x + 0.2; i += 0.01) {
+        xPoints.push(i);
+      }
+
+      return {
+        x: xPoints,
+        y: yPoints,
+      };
+    case 'AM':
+      y = 0.5;
+      x = 0.5;
+
+      yPoints = [];
+      xPoints = [];
+
+      for (let i = y - 0.2; i <= y + 0.2; i += 0.02) {
+        yPoints.push(i);
+      }
+
+      for (let i = x - 0.05; i <= x + 0.3; i += 0.02) {
+        xPoints.push(i);
+      }
+
+      return {
+        x: xPoints,
+        y: yPoints,
+      };
+    case 'LM':
+      y = 0.25;
+      x = 0.5;
+
+      yPoints = [];
+      xPoints = [];
+
+      for (let i = y - 0.1; i <= y + 0.2; i += 0.02) {
+        yPoints.push(i);
+      }
+
+      for (let i = x - 0.15; i <= x + 0.2; i += 0.02) {
+        xPoints.push(i);
+      }
+
+      return {
+        x: xPoints,
+        y: yPoints,
+      };
+    case 'RM':
+      y = 0.75;
+      x = 0.5;
+
+      yPoints = [];
+      xPoints = [];
+
+      for (let i = y - 0.2; i <= y + 0.1; i += 0.02) {
+        yPoints.push(i);
+      }
+
+      for (let i = x - 0.15; i <= x + 0.2; i += 0.02) {
+        xPoints.push(i);
+      }
+
+      return {
+        x: xPoints,
+        y: yPoints,
+      };
+    case 'CF':
+      y = 0.5;
+      x = 0.87;
+
+      yPoints = [];
+      xPoints = [];
+
+      for (let i = y - 0.12; i <= y + 0.12; i += 0.01) {
+        yPoints.push(i);
+      }
+
+      for (let i = x - 0.1; i <= x + 0.1; i += 0.01) {
+        xPoints.push(i);
+      }
+
+      return {
+        x: xPoints,
+        y: yPoints,
+      };
+    case 'SS':
+      y = 0.5;
+      x = 0.75;
+
+      yPoints = [];
+      xPoints = [];
+
+      for (let i = y - 0.1; i <= y + 0.1; i += 0.02) {
+        yPoints.push(i);
+      }
+
+      for (let i = x - 0.1; i <= x + 0.2; i += 0.02) {
+        xPoints.push(i);
+      }
+
+      return {
+        x: xPoints,
+        y: yPoints,
+      };
+    case 'LW':
+      y = 0.12;
+      x = 0.75;
+
+      yPoints = [];
+      xPoints = [];
+
+      for (let i = y - 0.1; i <= y + 0.15; i += 0.02) {
+        yPoints.push(i);
+      }
+
+      for (let i = x - 0.1; i <= x + 0.2; i += 0.02) {
+        xPoints.push(i);
+      }
+
+      return {
+        x: xPoints,
+        y: yPoints,
+      };
+    case 'RW':
+      y = 0.75;
+      x = 0.75;
+
+      yPoints = [];
+      xPoints = [];
+
+      for (let i = y - 0.15; i <= y + 0.1; i += 0.02) {
+        yPoints.push(i);
+      }
+
+      for (let i = x - 0.1; i <= x + 0.2; i += 0.02) {
+        xPoints.push(i);
+      }
+
+      return {
+        x: xPoints,
+        y: yPoints,
+      };
+    default:
+      y = 0.5;
+      x = 0.15;
+
+      yPoints = [];
+      xPoints = [];
+
+      for (let i = y - 0.1; i <= y + 0.1; i += 0.02) {
+        yPoints.push(i);
+      }
+
+      for (let i = x - 0.1; i <= x + 0.1; i += 0.02) {
+        xPoints.push(i);
+      }
+
+      return {
+        x: xPoints,
+        y: yPoints,
+      };
+  }
+};
 
 export const trailingZero = (num) =>
   num.toString().length === 1 ? `0${num}` : num;

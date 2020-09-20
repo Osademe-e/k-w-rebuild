@@ -21,6 +21,10 @@ import EditReplyForm from './components/EditReplyForm';
 import EditScoutCommentForm from './components/EditScoutCommentForm';
 import MatchInfo from './components/MatchInfo';
 import ResultsPage from './components/Results';
+import OldPasswordForm from './components/OldPassowordForm';
+import NewPasswordForm from './components/NewPasswordForm';
+import PostForm from './components/PostForm';
+import EditPostForm from './components/EditPostForm';
 
 // pages
 import HomePage from './pages/Home';
@@ -32,12 +36,14 @@ import NewsPage from './pages/News';
 import ForumPage from './pages/Forum';
 import ForumDetailsPage from './pages/ForumDetails';
 import TalentsPage from './pages/Talents';
+import ScoutsPage from './pages/Scouts';
 import PremiumPage from './pages/Premium';
 import NewsDetailsPage from './pages/NewsDetails';
 import NotFound from './pages/NotFound';
 import VerifyEmail from './pages/VerifyEmail';
 import TalentSignupPage from './pages/TalentSignup';
 import TalentDashboardPage from './pages/TalentDashboard';
+import ScoutDashboardPage from './pages/ScoutDashboard';
 import ScoutSignupPage from './pages/ScoutSignup';
 import FixturesPage from './pages/Fixtures';
 
@@ -92,6 +98,7 @@ function App() {
     reply: null,
     scoutComment: null,
     fixture: null,
+    post: null,
   });
 
   // initial toast state
@@ -222,6 +229,20 @@ function App() {
                   render={(props) => <TalentsPage {...props} />}
                 />
 
+                {/* scout dashboard page */}
+                <Route
+                  exact
+                  path="/scouts/:id"
+                  render={(props) => <ScoutDashboardPage {...props} />}
+                />
+
+                {/* scout page */}
+                <Route
+                  exact
+                  path="/scouts"
+                  render={(props) => <ScoutsPage {...props} />}
+                />
+
                 {/* premium page */}
                 <Route
                   exact
@@ -338,6 +359,19 @@ function App() {
 
           {/* match info */}
           {openModal.component === 'match info' && <MatchInfo />}
+
+          {/* old password */}
+          {openModal.component === 'old password' && <OldPasswordForm />}
+
+          {/* new password */}
+          {openModal.component === 'new password' && <NewPasswordForm />}
+
+          {/* posts */}
+          {(openModal.component === 'Make News Post' ||
+            openModal.component === 'Make Forum Post') && <PostForm />}
+
+          {/* edit posts */}
+          {openModal.component === 'edit post' && <EditPostForm />}
         </Modal>
       ) : null}
 

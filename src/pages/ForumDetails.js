@@ -36,7 +36,7 @@ const ForumDetails = () => {
               </span>
               <h2 className="mt-3 text-sm lg:text-xl">{doc.headline}</h2>
               <span className="p-2 bg-primary-500 text-primary-900 text-xs rounded">
-                {moment(doc.createdAt).format('ddd MMM YYYY')}
+                {moment(doc?.createdAt.toDate()).format('ddd MMM YYYY')}
               </span>
             </>
           )}

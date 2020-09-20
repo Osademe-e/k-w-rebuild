@@ -10,13 +10,7 @@ import { AppContext } from '../App';
 import Loader from '../components/Loader';
 import PageError from '../components/PageError';
 import HeroContainer from '../components/HeroContainer';
-import Profile from '../components/Profile';
-import Videos from '../components/Videos';
-import Stats from '../components/Stats';
-import Biometrics from '../components/Biometrics';
-import Review from '../components/Review';
-import ScoutComments from '../components/ScoutComments';
-import HeatMap from '../components/HeatMap';
+import ScoutProfile from '../components/ScoutProfile';
 
 // hooks
 import useFirestoreDoc from '../hooks/useFirestoreDoc';
@@ -28,7 +22,7 @@ import { timestamp } from '../config/fbConfig';
 // helper
 import { pageAnim, errorDisplayHandler, fileChecker } from '../utils/_helpers';
 
-const TalentDashboard = () => {
+const ScoutDashboard = () => {
   // context
   const { user, toogleModal, toogleToast, profile } = useContext(AppContext);
 
@@ -41,7 +35,7 @@ const TalentDashboard = () => {
   const { id } = useParams();
 
   // fetch talent doc
-  const { doc, fetching, error } = useFirestoreDoc('talents', id);
+  const { doc, fetching, error } = useFirestoreDoc('scouts', id);
 
   const handleProfilePixChange = async (e) => {
     const file = e.target.files[0];
@@ -69,11 +63,11 @@ const TalentDashboard = () => {
     ]);
 
     if (validateFile.response) {
-      const oldImgPath = doc.profile.photo;
+      const oldImgPath = doc.photo;
       // upload photos and videos
       try {
         // prepare request
-        const dir = 'images/talents';
+        const dir = 'images/scouts';
 
         const fileType = file.type.split('/')[1];
 
@@ -94,16 +88,13 @@ const TalentDashboard = () => {
         };
 
         let update = {
-          ...doc.profile,
+          ...doc,
           updatedAt: timestamp(),
           photo: uploaded,
         };
 
         // update firestore
-        await firestore
-          .collection('talents')
-          .doc(id)
-          .update({ profile: update });
+        await firestore.collection('scouts').doc(id).update(update);
 
         // delete old image
         await storage.ref().child(oldImgPath.path).delete();
@@ -142,24 +133,22 @@ const TalentDashboard = () => {
   };
 
   // approve talent
-  const approveTalent = async () => {
+  const approveScout = async () => {
     toogleModal({
       open: true,
       component: 'loader',
-      message: `Approving ${doc?.profile?.fullName}'s talent profile...`,
+      message: `Approving ${doc?.fullName}'s scout profile...`,
     });
 
     try {
-      await firestore.collection('talents').doc(id).update({ approved: true });
+      await firestore.collection('scouts').doc(id).update({ approved: true });
 
       toogleModal({
         open: false,
         component: '',
         message: null,
       });
-      toogleToast(
-        `${doc?.profile?.fullName}'s talent profile has been approved.`
-      );
+      toogleToast(`${doc?.fullName}'s scout profile has been approved.`);
     } catch (error) {
       toogleModal({
         open: false,
@@ -184,7 +173,7 @@ const TalentDashboard = () => {
             style={{
               WebkitTextStroke: '1px gold',
             }}>
-            {doc?.stats?.positionNumber}
+            {doc?.fullName}
           </h1>
         </div>
       </HeroContainer>
@@ -192,82 +181,70 @@ const TalentDashboard = () => {
         {doc &&
           (doc.approved ||
             (profile && profile?.doc?.role === 'super admin')) && (
-            <div className="lg:flex">
-              <section className="w-full lg:w-1/4  mt-4">
-                {!doc.approved &&
-                  profile &&
-                  profile?.doc?.role === 'super admin' && (
-                    <div className="bg-white shadow rounded overflow-hidden mb-4 flex items-center justify-between text-xs p-2 font-semibold">
-                      <span
-                        className="cursor-pointer flex items-center"
-                        onClick={() => history.goBack()}>
-                        <span className="material-icons mr-2">arrow_back</span>
-                        <span>Back</span>
-                      </span>
-                      <span
-                        className="cursor-pointer p-2 rounded bg-secondary text-primary-100 uppercase"
-                        onClick={approveTalent}>
-                        Approve
-                      </span>
-                    </div>
-                  )}
-                <div
-                  className="bg-white shadow rounded overflow-hidden relative mb-4"
-                  style={
-                    {
-                      // top: '-30px',
-                    }
-                  }>
-                  <h2 className="font-semibold px-2 py-3 border-b border-gray-200 ">
-                    {doc?.profile?.fullName}
-                  </h2>
-                  <img
-                    src={doc?.profile?.photo?.photoURL}
-                    alt="Talent pix"
-                    className="w-full h-64 object-cover object-top"
-                  />
+            <section className="w-full lg:w-1/2 mt-4 mx-auto">
+              {!doc.approved &&
+                profile &&
+                profile?.doc?.role === 'super admin' && (
+                  <div className="bg-white shadow rounded overflow-hidden mb-4 flex items-center justify-between text-xs p-2 font-semibold">
+                    <span
+                      className="cursor-pointer flex items-center"
+                      onClick={() => history.goBack()}>
+                      <span className="material-icons mr-2">arrow_back</span>
+                      <span>Back</span>
+                    </span>
+                    <span
+                      className="cursor-pointer p-2 rounded bg-secondary text-primary-100 uppercase"
+                      onClick={approveScout}>
+                      Approve
+                    </span>
+                  </div>
+                )}
+              <div
+                className="bg-white shadow rounded overflow-hidden relative mb-4"
+                style={
+                  {
+                    // top: '-30px',
+                  }
+                }>
+                <h2 className="font-semibold px-2 py-3 border-b border-gray-200 ">
+                  {doc?.fullName}
+                </h2>
+                <img
+                  src={doc?.photo?.photoURL}
+                  alt="Talent pix"
+                  className="w-full h-64 object-contain object-top"
+                />
 
-                  {user?.uid === doc?.id && (
-                    <div className="p-2 flex justify-between items-center">
-                      <span className="text-xs font-semibold">
-                        Created:{' '}
-                        {moment(
-                          doc.createdAt?.seconds
-                            ? doc.createdAt?.toDate()
-                            : doc.createdAt
-                        ).format('MMM YY')}
+                {user?.uid === doc?.id && (
+                  <div className="p-2 flex justify-between items-center">
+                    <span className="text-xs font-semibold">
+                      Created:{' '}
+                      {moment(
+                        doc.createdAt?.seconds
+                          ? doc.createdAt?.toDate()
+                          : doc.createdAt
+                      ).format('MMM YY')}
+                    </span>
+                    <div className="relative flex">
+                      <input
+                        type="file"
+                        className="w-full opacity-0 z-10"
+                        onChange={handleProfilePixChange}
+                      />
+                      <span className="material-icons shadow-lg absolute right-0 top-0 text-secondary">
+                        camera
                       </span>
-                      <div className="relative flex">
-                        <input
-                          type="file"
-                          className="w-full opacity-0 z-10"
-                          onChange={handleProfilePixChange}
-                        />
-                        <span className="material-icons shadow-lg absolute right-0 top-0 text-secondary">
-                          camera
-                        </span>
-                      </div>
                     </div>
-                  )}
-                </div>
-                <Profile profile={doc.profile} />
-                <Biometrics biometrics={doc.biometrics} />
-              </section>
-              <section className="flex-1 mt-5 lg:mt-4 mx-0 lg:mx-5">
-                <Review review={doc?.adminReview} />
-                <Stats stats={doc.stats} />
-              </section>
-              <section className="w-full lg:w-1/3 mt-4">
-                <Videos stats={doc.stats} />
-                <HeatMap position={doc.stats.position} />
-                <ScoutComments comments={doc?.scoutComments} />
-              </section>
-            </div>
+                  </div>
+                )}
+              </div>
+              <ScoutProfile profile={doc} />
+            </section>
           )}
         {!doc && !fetching && <PageError message={`Not Found`} />}
         {doc && !doc.approved && profile?.doc?.role !== 'super admin' && (
           <div className="font-semibold text-center py-2 mt-4">
-            Talent profile not avaliable at the moment
+            Scout profile not avaliable at the moment
           </div>
         )}
         {fetching && !doc && <Loader />}
@@ -277,4 +254,4 @@ const TalentDashboard = () => {
   );
 };
 
-export default TalentDashboard;
+export default ScoutDashboard;

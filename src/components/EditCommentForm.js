@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 
@@ -85,42 +85,40 @@ const EditCommentForm = () => {
   });
 
   return (
-    <AnimatePresence>
-      <motion.div
-        variants={editCommentsFormVariants}
-        initial="hidden"
-        animate="visible"
-        exit="hidden"
-        className="absolute w-full">
-        <div className=" w-full lg:w-1/2 lg:mx-auto rounded-t px-2 py-4 bg-white">
-          <form onSubmit={formik.handleSubmit}>
-            <div className="form-control">
-              <label htmlFor="editComment" className="label">
-                Edit Comment
-              </label>
-              <textarea
-                name="editComment"
-                id="editComment"
-                rows="2"
-                className="input-field focus:border focus:border-primary-900 placeholder-primary-800 placeholder-opacity-25"
-                placeholder="edit..."
-                {...formik.getFieldProps('editComment')}></textarea>
+    <motion.div
+      variants={editCommentsFormVariants}
+      initial="hidden"
+      animate="visible"
+      exit="hidden"
+      className="absolute w-full">
+      <div className=" w-full lg:w-1/2 lg:mx-auto rounded-t px-2 py-4 bg-white">
+        <form onSubmit={formik.handleSubmit}>
+          <div className="form-control">
+            <label htmlFor="editComment" className="label">
+              Edit Comment
+            </label>
+            <textarea
+              name="editComment"
+              id="editComment"
+              rows="2"
+              className="input-field focus:border focus:border-primary-900 placeholder-primary-800 placeholder-opacity-25"
+              placeholder="edit..."
+              {...formik.getFieldProps('editComment')}></textarea>
 
-              {formik.touched.editComment && formik.errors.editComment ? (
-                <FormError error={formik.errors.editComment} />
-              ) : null}
-            </div>
+            {formik.touched.editComment && formik.errors.editComment ? (
+              <FormError error={formik.errors.editComment} />
+            ) : null}
+          </div>
 
-            <input
-              value={formik.isSubmitting ? 'Submitting...' : 'Submit'}
-              type="submit"
-              disabled={formik.isSubmitting}
-              className="btn bg-secondary text-white text-xs lg:text-sm mx-2"
-            />
-          </form>
-        </div>
-      </motion.div>
-    </AnimatePresence>
+          <input
+            value={formik.isSubmitting ? 'Submitting...' : 'Submit'}
+            type="submit"
+            disabled={formik.isSubmitting}
+            className="btn bg-secondary text-white text-xs lg:text-sm mx-2"
+          />
+        </form>
+      </div>
+    </motion.div>
   );
 };
 

@@ -31,7 +31,7 @@ const MatchCard = ({ fixtures }) => {
           </div>
           {['1H', 'HT', '2H', 'ET', 'P', 'FT', 'AET', 'PEN', 'BT'].includes(
             fixture.status.short
-          ) && <div>{score.fulltime.home}</div>}
+          ) && <div>{goals.home}</div>}
         </div>
         <div className="flex items-center justify-between">
           <div className="flex-1 flex items-center my-1">
@@ -44,7 +44,7 @@ const MatchCard = ({ fixtures }) => {
           </div>
           {['1H', 'HT', '2H', 'ET', 'P', 'FT', 'AET', 'PEN', 'BT'].includes(
             fixture.status.short
-          ) && <div>{score.fulltime.away}</div>}
+          ) && <div>{goals.away}</div>}
         </div>
       </div>
       <div className="border-l border-gray-300 px-3 text-center ml-1">

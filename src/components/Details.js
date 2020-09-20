@@ -1,8 +1,7 @@
 import React, { useContext, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useHistory } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import moment from 'moment';
 
 import './styles/Details.css';
 
@@ -11,7 +10,8 @@ import { timestamp, increment } from '../config/fbConfig';
 
 // hooks
 import useFirestore from '../hooks/useFirestore';
-import useFriestoreDoc from '../hooks/useFirestoreDoc';
+import useStorage from '../hooks/useStorage';
+import useForumComments from '../hooks/useForumComments';
 
 // app context
 import { AppContext } from '../App';
@@ -24,13 +24,12 @@ import Loader from './Loader';
 // helper function
 import { errorDisplayHandler } from '../utils/_helpers';
 
-// hooks
-import useForumComments from '../hooks/useForumComments';
-
 const Details = ({ details, collection }) => {
   const firestore = useFirestore();
+  const storage = useStorage();
   const { user, authLoaded, toogleToast, toogleModal } = useContext(AppContext);
   const location = useLocation();
+  const history = useHistory();
   const [forumDoc, setForumDoc] = useState(null);
   const [showComments, setShowComments] = useState(false);
   const [page, setPage] = useState(null);
@@ -41,6 +40,85 @@ const Details = ({ details, collection }) => {
     10,
     page
   );
+
+  // delete post
+  const deletePost = async () => {
+    toogleModal({
+      open: true,
+      component: 'loader',
+      message: `Deleting ${collection} post...`,
+    });
+
+    try {
+      // check if it is a forum post been deleted
+      if (collection === 'forum') {
+        // check if forum has comments
+        if (details.commentCount) {
+          const commentsSnapshots = await firestore
+            .collection('forum')
+            .doc(details.id)
+            .collection('comments')
+            .get();
+
+          commentsSnapshots.docs.forEach(async (comment) => {
+            const batch = firestore.batch();
+            // chech if comment has replies
+            if (comment.data().replyCount) {
+              const repliesSnapshots = await firestore
+                .collection('forum')
+                .doc(details.id)
+                .collection('comments')
+                .doc(comment.id)
+                .collection('replies')
+                .get();
+
+              repliesSnapshots.forEach((doc) => {
+                const ref = firestore
+                  .collection('forum')
+                  .doc(details.id)
+                  .collection('comments')
+                  .doc(comment.id)
+                  .collection('replies')
+                  .doc(doc.id);
+                batch.delete(ref);
+              });
+            }
+
+            const ref = firestore
+              .collection('forum')
+              .doc(details.id)
+              .collection('comments')
+              .doc(comment.id);
+
+            batch.delete(ref);
+            // delete all comments
+            await batch.commit();
+          });
+        }
+      }
+
+      await storage
+        .ref()
+        .child(details?.photos[Object.keys(details?.photos)[0]].path)
+        .delete();
+      await firestore.collection(collection).doc(details.id).delete();
+
+      toogleModal({
+        open: false,
+        component: '',
+        message: null,
+      });
+      toogleToast('Post Deleted');
+      history.goBack();
+    } catch (error) {
+      toogleModal({
+        open: false,
+        component: '',
+        message: null,
+      });
+      toogleToast(errorDisplayHandler(error));
+    }
+  };
 
   // to show and hide comments
   const handleShowComments = () => {
@@ -188,19 +266,44 @@ const Details = ({ details, collection }) => {
   });
 
   return (
-    <div className="details lg:container mx-auto px-2 lg:px-0 flex text-primary-900">
-      <main className="details__main flex-1">
+    <div className="details lg:container mx-auto px-2 lg:px-0 text-primary-900 lg:w-1/2 mt-2 shadow rounded overflow-hidden bg-white">
+      <main className="details__main">
         <figure>
-          <img src={details.photoURL} alt="news" className="w-full" />
-          <figcaption className="mt-2 py-2 font-semibold">
+          <img
+            src={details?.photos[Object.keys(details?.photos)[0]].photoURL}
+            alt="news"
+            className="w-full"
+          />
+          <figcaption className="mt-2 py-2 font-semibold px-2">
             {details.subHeadline}.
           </figcaption>
         </figure>
         <div
           dangerouslySetInnerHTML={{ __html: details.body }}
-          className="text-sm font-light leading-relaxed mb-4 details__main--body"></div>
+          className="text-sm font-light leading-relaxed mb-4 details__main--body px-2"></div>
+        <div className="p-2 flex items-center text-xs">
+          <span
+            className="material-icons mr-2 text-gray-600 cursor-pointer opacity-75 hover:opacity-100 hover:text-secondary"
+            onClick={() =>
+              toogleModal({
+                open: true,
+                component: 'edit post',
+                post: {
+                  collection,
+                  details,
+                },
+              })
+            }>
+            edit
+          </span>
+          <span
+            className="material-icons text-gray-600 cursor-pointer opacity-75 hover:opacity-100 hover:text-red-600"
+            onClick={deletePost}>
+            delete
+          </span>
+        </div>
         {collection === 'forum' && (
-          <div>
+          <div className="px-2">
             <p className="font-semibold">{`(${
               details?.commentCount || 0
             }) Comments`}</p>
@@ -323,7 +426,6 @@ const Details = ({ details, collection }) => {
           </div>
         )}
       </main>
-      <aside className="details__aside hidden lg:block ">hello</aside>
     </div>
   );
 };

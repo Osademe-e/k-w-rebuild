@@ -1819,7 +1819,6 @@ video {
 
 .appearance-none{
   -webkit-appearance: none;
-     -moz-appearance: none;
           appearance: none;
 }
 
@@ -15187,7 +15186,6 @@ body {
 
 .input-field {
   -webkit-appearance: none;
-     -moz-appearance: none;
           appearance: none;
   border-width: 1px;
   --border-opacity: 1;
@@ -16458,7 +16456,6 @@ body {
 
   .sm\:appearance-none{
     -webkit-appearance: none;
-       -moz-appearance: none;
             appearance: none;
   }
 
@@ -30973,7 +30970,6 @@ body {
 
   .md\:appearance-none{
     -webkit-appearance: none;
-       -moz-appearance: none;
             appearance: none;
   }
 
@@ -45488,7 +45484,6 @@ body {
 
   .lg\:appearance-none{
     -webkit-appearance: none;
-       -moz-appearance: none;
             appearance: none;
   }
 
@@ -60003,7 +59998,6 @@ body {
 
   .xl\:appearance-none{
     -webkit-appearance: none;
-       -moz-appearance: none;
             appearance: none;
   }
 

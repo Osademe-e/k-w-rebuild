@@ -796,3 +796,4 @@
 [0904/032905.569:ERROR:exception_snapshot_win.cc(99)] thread ID 11040 not found in process
 [0904/032905.569:ERROR:exception_snapshot_win.cc(99)] thread ID 11716 not found in process
 [0906/182918.959:ERROR:settings.cc(320)] Settings magic is not 1129342067
+[0919/150624.732:ERROR:settings.cc(320)] Settings magic is not 1129342067

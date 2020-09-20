@@ -32,6 +32,8 @@ const Home = ({ featuredTalents }) => {
     }
   );
 
+  console.log(news);
+
   return (
     <motion.div
       variants={pageAnim}
@@ -192,7 +194,7 @@ const Home = ({ featuredTalents }) => {
                       <div className={`flex flex-1`} key={n.id}>
                         <div className={`overflow-hidden w-1/2`}>
                           <img
-                            src={n.photoURL}
+                            src={n.photos[Object.keys(n.photos)[0]].photoURL}
                             alt={n.id}
                             className="transition duration-500 ease-in-out transform hover:scale-105 w-full"
                           />
@@ -245,14 +247,14 @@ const Home = ({ featuredTalents }) => {
                   </span>
                   <div className="w-2/5 sm:w-full">
                     <img
-                      src={n.photoURL}
+                      src={n?.photos[Object.keys(n?.photos)[0]].photoURL}
                       alt="news"
                       className="transition duration-500 ease-in-out transform hover:scale-105 w-full"
                     />
                   </div>
                   <div className="px-2">
                     <p className="text-xs font-bold py-1 sm:py-4 opacity-50">
-                      {moment(n.createdAt).format('MMMM d YYYY')}
+                      {moment(n?.createdAt?.toDate()).format('MMMM d YYYY')}
                     </p>
                     <Link
                       to={`/news/${n.id}`}

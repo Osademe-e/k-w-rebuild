@@ -1,13 +1,11 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import moment from 'moment';
 
 // svg icons
 import rightarrow from '../assets/icons/rightarrow.svg';
 
 const InfoCard = ({ info, collection }) => {
-  const location = useLocation();
-
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 lg:flex-1">
       {info &&
@@ -21,14 +19,14 @@ const InfoCard = ({ info, collection }) => {
             </span>
             <div className="w-2/5 sm:w-full">
               <img
-                src={n.photoURL}
+                src={n?.photos[Object.keys(n?.photos)[0]].photoURL}
                 alt="news"
                 className="transition duration-500 ease-in-out transform hover:scale-105 w-full"
               />
             </div>
             <div className="px-2">
               <p className="text-xs font-bold py-1 sm:py-4 opacity-50">
-                {moment(n.createdAt).format('MMMM d YYYY')}
+                {moment(n?.createdAt.toDate()).format('MMMM d YYYY')}
               </p>
               <Link
                 to={{
