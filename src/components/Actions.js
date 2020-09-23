@@ -6,8 +6,8 @@ import { AppContext } from '../App';
 const Actions = () => {
   const { toogleModal } = useContext(AppContext);
 
-  const actions = ['Make News Post', 'Make Forum Post'];
-  const colors = ['green', 'blue'];
+  const actions = ['Make News Post', 'Make Forum Post', 'Make Premium Post'];
+  const colors = ['green', 'blue', 'orange'];
   return (
     <div className="border border-gray-200 text-xs px-2 mt-3">
       <h2 className="font-semibold uppercase py-2 border-b border-gray-200">

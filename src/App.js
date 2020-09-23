@@ -25,6 +25,8 @@ import OldPasswordForm from './components/OldPassowordForm';
 import NewPasswordForm from './components/NewPasswordForm';
 import PostForm from './components/PostForm';
 import EditPostForm from './components/EditPostForm';
+import PremiumPostForm from './components/PremiumPostForm';
+import EditPremiumPost from './components/EditPremiumPostForm';
 
 // pages
 import HomePage from './pages/Home';
@@ -40,7 +42,6 @@ import ScoutsPage from './pages/Scouts';
 import PremiumPage from './pages/Premium';
 import NewsDetailsPage from './pages/NewsDetails';
 import NotFound from './pages/NotFound';
-import VerifyEmail from './pages/VerifyEmail';
 import TalentSignupPage from './pages/TalentSignup';
 import TalentDashboardPage from './pages/TalentDashboard';
 import ScoutDashboardPage from './pages/ScoutDashboard';
@@ -99,6 +100,7 @@ function App() {
     scoutComment: null,
     fixture: null,
     post: null,
+    premium: null,
   });
 
   // initial toast state
@@ -157,165 +159,151 @@ function App() {
         },
       }}>
       <Header featuredTalents={featuredTalents} />
-      <div className="flex-1">
+      <motion.div layout className="flex-1">
         {error ? (
           <div>error</div>
         ) : authLoaded ? (
-          user &&
-          !user.emailVerified &&
-          user.providerData[0].providerId !== 'facebook.com' &&
-          user.providerData[0].providerId !== 'twitter.com' &&
-          user.providerData[0].providerId !== 'google.com' ? (
-            <Switch>
+          <AnimatePresence
+            exitBeforeEnter
+            onExitComplete={() =>
+              toogleModal({
+                open: false,
+                component: '',
+                message: null,
+                comment: null,
+                reply: null,
+              })
+            }>
+            <Switch location={location} key={location.key}>
+              {/* dashboardpage */}
+              <PrivateRoute exact path="/dashboard" user={user}>
+                <DashboardPage />
+              </PrivateRoute>
+
+              {/* loginpage - if loggedin, go to previous page else go to login */}
               <Route
-                path="/verify-email"
-                render={(props) => <VerifyEmail {...props} />}
+                exact
+                path="/login"
+                render={(props) => <LoginPage {...props} />}
               />
-              <Redirect to="/verify-email" />
+
+              {/* register - if loggedin, go to previous page else go to register */}
+              <Route
+                exact
+                path="/register"
+                render={(props) => <SignupPage {...props} />}
+              />
+
+              {/* ScoutSignupPage */}
+              <PrivateRoute exact path="/scout-signup" user={user}>
+                <ScoutSignupPage />
+              </PrivateRoute>
+
+              {/* talentSignup */}
+              <PrivateRoute exact path="/talent-signup" user={user}>
+                <TalentSignupPage />
+              </PrivateRoute>
+
+              {/* talent dashboard page */}
+              <Route
+                exact
+                path="/talents/:id"
+                render={(props) => <TalentDashboardPage {...props} />}
+              />
+
+              {/* talents page */}
+              <Route
+                exact
+                path="/talents"
+                render={(props) => <TalentsPage {...props} />}
+              />
+
+              {/* scout dashboard page */}
+              <Route
+                exact
+                path="/scouts/:id"
+                render={(props) => <ScoutDashboardPage {...props} />}
+              />
+
+              {/* scout page */}
+              <Route
+                exact
+                path="/scouts"
+                render={(props) => <ScoutsPage {...props} />}
+              />
+
+              {/* premium page */}
+              <Route
+                exact
+                path="/premium"
+                render={(props) => <PremiumPage {...props} />}
+              />
+
+              {/* news details page */}
+              <Route
+                exact
+                path="/news/:id"
+                render={(props) => <NewsDetailsPage {...props} />}
+              />
+
+              {/* news page */}
+              <Route
+                exact
+                path="/news"
+                render={(props) => <NewsPage {...props} />}
+              />
+
+              {/* fixtures page */}
+              <Route
+                exact
+                path="/fixtures"
+                render={(props) => <FixturesPage {...props} />}
+              />
+
+              {/* results page */}
+              <Route
+                exact
+                path="/results"
+                render={(props) => <ResultsPage {...props} />}
+              />
+
+              {/* forum details page */}
+              <Route
+                exact
+                path="/forum/:id"
+                render={(props) => <ForumDetailsPage {...props} />}
+              />
+
+              {/* forum page */}
+              <Route
+                exact
+                path="/forum"
+                render={(props) => <ForumPage {...props} />}
+              />
+
+              {/* About page */}
+              <Route
+                path="/about"
+                render={(props) => <AboutPage {...props} />}
+              />
+
+              {/* homepage */}
+              <Route
+                exact
+                path="/"
+                render={(props) => (
+                  <HomePage featuredTalents={featuredTalents} {...props} />
+                )}
+              />
+
+              {/* wildcard - 404 not found */}
+              <Route path="*" render={(props) => <NotFound {...props} />} />
             </Switch>
-          ) : (
-            <AnimatePresence
-              exitBeforeEnter
-              onExitComplete={() =>
-                toogleModal({
-                  open: false,
-                  component: '',
-                  message: null,
-                  comment: null,
-                  reply: null,
-                })
-              }>
-              <Switch location={location} key={location.key}>
-                {/* dashboardpage */}
-                <PrivateRoute exact path="/dashboard" user={user}>
-                  <DashboardPage />
-                </PrivateRoute>
-
-                {/* loginpage - if loggedin, go to previous page else go to login */}
-                <Route
-                  exact
-                  path="/login"
-                  render={(props) => <LoginPage {...props} />}
-                />
-
-                {/* register - if loggedin, go to previous page else go to register */}
-                <Route
-                  exact
-                  path="/register"
-                  render={(props) => <SignupPage {...props} />}
-                />
-
-                {/* ScoutSignupPage */}
-                <PrivateRoute exact path="/scout-signup" user={user}>
-                  <ScoutSignupPage />
-                </PrivateRoute>
-
-                {/* talentSignup */}
-                <PrivateRoute exact path="/talent-signup" user={user}>
-                  <TalentSignupPage />
-                </PrivateRoute>
-
-                {/* talent dashboard page */}
-                <Route
-                  exact
-                  path="/talents/:id"
-                  render={(props) => <TalentDashboardPage {...props} />}
-                />
-
-                {/* talents page */}
-                <Route
-                  exact
-                  path="/talents"
-                  render={(props) => <TalentsPage {...props} />}
-                />
-
-                {/* scout dashboard page */}
-                <Route
-                  exact
-                  path="/scouts/:id"
-                  render={(props) => <ScoutDashboardPage {...props} />}
-                />
-
-                {/* scout page */}
-                <Route
-                  exact
-                  path="/scouts"
-                  render={(props) => <ScoutsPage {...props} />}
-                />
-
-                {/* premium page */}
-                <Route
-                  exact
-                  path="/premium"
-                  render={(props) => <PremiumPage {...props} />}
-                />
-
-                {/* news details page */}
-                <Route
-                  exact
-                  path="/news/:id"
-                  render={(props) => <NewsDetailsPage {...props} />}
-                />
-
-                {/* news page */}
-                <Route
-                  exact
-                  path="/news"
-                  render={(props) => <NewsPage {...props} />}
-                />
-
-                {/* fixtures page */}
-                <Route
-                  exact
-                  path="/fixtures"
-                  render={(props) => <FixturesPage {...props} />}
-                />
-
-                {/* results page */}
-                <Route
-                  exact
-                  path="/results"
-                  render={(props) => <ResultsPage {...props} />}
-                />
-
-                {/* forum details page */}
-                <Route
-                  exact
-                  path="/forum/:id"
-                  render={(props) => <ForumDetailsPage {...props} />}
-                />
-
-                {/* forum page */}
-                <Route
-                  exact
-                  path="/forum"
-                  render={(props) => <ForumPage {...props} />}
-                />
-
-                {/* About page */}
-                <Route
-                  path="/about"
-                  render={(props) => <AboutPage {...props} />}
-                />
-
-                {/* homepage */}
-                <Route
-                  exact
-                  path="/"
-                  render={(props) => (
-                    <HomePage featuredTalents={featuredTalents} {...props} />
-                  )}
-                />
-
-                {/* wildcard - 404 not found */}
-                <Route path="*" render={(props) => <NotFound {...props} />} />
-              </Switch>
-            </AnimatePresence>
-          )
+          </AnimatePresence>
         ) : (
           <Loader />
         )}
-      </div>
+      </motion.div>
       <Footer />
 
       {/* Modal component */}
@@ -372,6 +360,12 @@ function App() {
 
           {/* edit posts */}
           {openModal.component === 'edit post' && <EditPostForm />}
+
+          {/* premium posts */}
+          {openModal.component === 'Make Premium Post' && <PremiumPostForm />}
+
+          {/* edit premium posts */}
+          {openModal.component === 'edit premium post' && <EditPremiumPost />}
         </Modal>
       ) : null}
 

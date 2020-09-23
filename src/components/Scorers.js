@@ -1,6 +1,5 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
-import moment from 'moment';
 
 const Scorers = () => {
   return (

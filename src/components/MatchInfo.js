@@ -8,9 +8,6 @@ import { AppContext } from '../App';
 // helper
 import { leagueColor } from '../utils/_helpers';
 
-// components
-import Scorers from './Scorers';
-
 const editScoutCommentFormVariants = {
   hidden: {
     opacity: 0,
@@ -100,7 +97,10 @@ const MatchInfo = () => {
               <p className="font-semibold">{teams.home.name}</p>
             </div>
             <div className="flex-1 flex items-center justify-evenly text-xl font-semibold">
-              {fixture.status.short === 'FT' || fixture.status.short === '1H' || fixture.status.short === 'HT' || fixture.status.short === '2H' ? (
+              {fixture.status.short === 'FT' ||
+              fixture.status.short === '1H' ||
+              fixture.status.short === 'HT' ||
+              fixture.status.short === '2H' ? (
                 <>
                   <span>{goals.home}</span>
                   <span>-</span>

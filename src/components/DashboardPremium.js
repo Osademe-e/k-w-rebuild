@@ -1,14 +1,10 @@
 import React, { useContext } from 'react';
-import { Link, useLocation } from 'react-router-dom';
 import { usePaystackPayment } from 'react-paystack';
 import moment from 'moment';
 import cryptoRandomString from 'crypto-random-string';
 
 // context
 import { AppContext } from '../App';
-
-// hooks
-import useFirestoreCollection from '../hooks/useFirestoreCollection';
 
 import kingsportsIcon from '../assets/images/logo svg/Asset 19.svg';
 
@@ -25,14 +21,9 @@ const DashboardPremium = () => {
 
   const initializePayment = usePaystackPayment(config);
 
-  // location
-  const location = useLocation();
-
-  const { ordered } = useFirestoreCollection('premium');
-
-  return !profile?.doc?.premium ||
-    (profile?.doc?.premium &&
-      ordered.find((o) => o.userId === user.uid).expAt < Date.now()) ? (
+  return !profile?.doc?.subscriptions?.premium?.subscribed ||
+    +moment(profile?.doc?.subscriptions?.premium?.bundle.expAt.toDate()) <
+      +moment() ? (
     <div className="shadow rounded overflow-hidden text-sm mt-3 text-primary-900">
       <div className="bg-primary-500 px-3 py-6">
         <img src={kingsportsIcon} alt="kingsport" className="w-24" />
@@ -44,13 +35,14 @@ const DashboardPremium = () => {
         </ul>
       </div>
       <div className="bg-primary-900 px-3 py-6 text-primary-100">
-        {!profile?.doc?.premium && (
+        {!profile?.doc?.subscriptions?.premium?.subscribed && (
           <h2 className="text-xl border-b border-gray-900">
             Monthly Subscription
           </h2>
         )}
-        {profile?.doc?.premium &&
-          ordered.find((o) => o.userId === user.uid).expAt < Date.now() && (
+        {profile?.doc?.subscriptions?.premium?.subscribed &&
+          +moment(profile?.doc?.subscriptions?.premium?.bundle.expAt.toDate()) <
+            +moment() && (
             <p className="text-sm border-b border-gray-900">
               Your Monthly Subscription has{' '}
               <span className="bg-primary-100 p-1 text-red-600 font-semibold mb-2">

@@ -11,7 +11,6 @@ const useFirestoreCollection = (collection) => {
   useEffect(() => {
     setError(null);
     setFetching(true);
-    console.log(collection);
     let unsub;
     if (collection) {
       unsub = kingsportFirestore.collection(collection).onSnapshot(

@@ -8,6 +8,8 @@ import PlayerCard from '../components/PlayerCard';
 import Loader from '../components/Loader';
 import PageError from '../components/PageError';
 import HeroContainer from '../components/HeroContainer';
+import LiveCard from '../components/LiveCard';
+import FeaturedNewsCard from '../components/FeaturedNewsCard';
 
 // helper
 import { pageAnim, errorDisplayHandler } from '../utils/_helpers';
@@ -32,8 +34,6 @@ const Home = ({ featuredTalents }) => {
     }
   );
 
-  console.log(news);
-
   return (
     <motion.div
       variants={pageAnim}
@@ -43,178 +43,23 @@ const Home = ({ featuredTalents }) => {
       className="text-primary-800">
       {/* hero section */}
       <HeroContainer className="hero py-3">
-        <div className="lg:container mx-auto px-2 lg:px-0 lg:flex items-center justify-around">
-          <div className="z-10  flex-1 text-center">
-            <div className="flex flex-col font-semibold text-xs w-full sm:w-4/6 rounded shadow m-auto py-2 bg-primary-100">
-              <div className="mb-2">
-                <h4 className="mb-1">Matchweek 1</h4>
-                <h3 className="mb-1">Premier League</h3>
-                <p className="font-light">All time are local</p>
-                <h3 className="my-2 text-left px-2">
-                  {moment().format('dddd D MMMM')}
-                </h3>
-                <ul>
-                  <li className="p-2 border-b border-primary-200 cursor-pointer flex justify-between items-center group transition duration-500 ease-in-out hover:bg-primary-900">
-                    <Link
-                      to={`/fixtures/id/xyz`}
-                      className="flex items-center group-hover:text-primary-100">
-                      <span className="uppercase flex mr-2">
-                        cry &nbsp;
-                        <img
-                          src="https://resources.premierleague.com/premierleague/badges/20/t31.png"
-                          alt="club logo"
-                          className="w-5 h-5"
-                        />
-                      </span>
-                      <span className="border border-primary-300 rounded font-normal p-1">
-                        15:00
-                      </span>
-                      <span className="uppercase flex ml-2">
-                        <img
-                          src="https://resources.premierleague.com/premierleague/badges/20/t20.png"
-                          alt="club logo"
-                          className="w-5 h-5"
-                        />
-                        &nbsp; sou
-                      </span>
-                    </Link>
-                    <Link to={`/fixtures/id/xyz`}>
-                      <img src={rightarrow} alt="right arrow" className="w-2" />
-                    </Link>
-                  </li>
-                  <li className="p-2 border-b border-primary-200 cursor-pointer flex justify-between items-center group transition duration-500 ease-in-out hover:bg-primary-900">
-                    <Link
-                      to={`/fixtures/id/xyz`}
-                      className="flex items-center group-hover:text-primary-100">
-                      <span className="uppercase flex mr-2">
-                        cry &nbsp;
-                        <img
-                          src="https://resources.premierleague.com/premierleague/badges/20/t31.png"
-                          alt="club logo"
-                          className="w-5 h-5"
-                        />
-                      </span>
-                      <span className="border border-primary-300 rounded font-normal p-1">
-                        15:00
-                      </span>
-                      <span className="uppercase flex ml-2">
-                        <img
-                          src="https://resources.premierleague.com/premierleague/badges/20/t20.png"
-                          alt="club logo"
-                          className="w-5 h-5"
-                        />
-                        &nbsp; sou
-                      </span>
-                    </Link>
-                    <Link to={`/fixtures/id/xyz`}>
-                      <img src={rightarrow} alt="right arrow" className="w-2" />
-                    </Link>
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <h4 className="mb-1">Matchweek 1</h4>
-                <h3 className="mb-1">Premier League</h3>
-                <p className="font-light">All time are local</p>
-                <h3 className="my-2 text-left px-2">
-                  {moment().format('dddd D MMMM')}
-                </h3>
-                <ul>
-                  <li className="p-2 border-b border-primary-200 cursor-pointer flex justify-between items-center group transition duration-500 ease-in-out hover:bg-primary-900">
-                    <Link
-                      to={`/fixtures/id/xyz`}
-                      className="flex items-center group-hover:text-primary-100">
-                      <span className="uppercase flex mr-2">
-                        cry &nbsp;
-                        <img
-                          src="https://resources.premierleague.com/premierleague/badges/20/t31.png"
-                          alt="club logo"
-                          className="w-5 h-5"
-                        />
-                      </span>
-                      <span className="border border-primary-300 rounded font-normal p-1">
-                        15:00
-                      </span>
-                      <span className="uppercase flex ml-2">
-                        <img
-                          src="https://resources.premierleague.com/premierleague/badges/20/t20.png"
-                          alt="club logo"
-                          className="w-5 h-5"
-                        />
-                        &nbsp; sou
-                      </span>
-                    </Link>
-                    <Link to={`/fixtures/id/xyz`}>
-                      <img src={rightarrow} alt="right arrow" className="w-2" />
-                    </Link>
-                  </li>
-                  <li className="p-2 border-b border-primary-200 cursor-pointer flex justify-between items-center group transition duration-500 ease-in-out hover:bg-primary-900">
-                    <Link
-                      to={`/fixtures/id/xyz`}
-                      className="flex items-center group-hover:text-primary-100">
-                      <span className="uppercase flex mr-2">
-                        cry &nbsp;
-                        <img
-                          src="https://resources.premierleague.com/premierleague/badges/20/t31.png"
-                          alt="club logo"
-                          className="w-5 h-5"
-                        />
-                      </span>
-                      <span className="border border-primary-300 rounded font-normal p-1">
-                        15:00
-                      </span>
-                      <span className="uppercase flex ml-2">
-                        <img
-                          src="https://resources.premierleague.com/premierleague/badges/20/t20.png"
-                          alt="club logo"
-                          className="w-5 h-5"
-                        />
-                        &nbsp; sou
-                      </span>
-                    </Link>
-                    <Link to={`/fixtures/id/xyz`}>
-                      <img src={rightarrow} alt="right arrow" className="w-2" />
-                    </Link>
-                  </li>
-                </ul>
-              </div>
+        <div className="lg:container mx-auto px-2 lg:px-0 lg:flex items-center justify-evenly">
+          <div className="z-10  flex-1">
+            <div className="font-semibold text-xs w-full sm:w-4/6 rounded shadow m-auto py-2 bg-primary-100">
+              <LiveCard />
             </div>
           </div>
 
           <div className="z-10 flex-1 hidden lg:block">
             {!news && <Loader />}
-            {news && news.length === 0 && <div>No news</div>}
+            {news && news.length === 0 && (
+              <div className="text-center font-semibold text-primary-100">
+                No news
+              </div>
+            )}
             {news && news.length > 0 && (
               <div className="flex flex-col">
-                {news
-                  .filter((n) => n.featured)
-                  .splice(0, 3)
-                  .map((n, i) =>
-                    i === 0 ? (
-                      <div className={`flex flex-1`} key={n.id}>
-                        <div className={`overflow-hidden w-1/2`}>
-                          <img
-                            src={n.photos[Object.keys(n.photos)[0]].photoURL}
-                            alt={n.id}
-                            className="transition duration-500 ease-in-out transform hover:scale-105 w-full"
-                          />
-                        </div>
-                        <div className="bg-primary-500 flex-1 p-2">
-                          <h4 className="font-semibold text-primary-700">
-                            {n.category}
-                          </h4>
-                          <Link
-                            to={`/news/${n.id}`}
-                            className="font-semibold hover:underline">
-                            {n.headline}
-                          </Link>
-                          <p className="text-xs mt-2">{n.subHeadline}</p>
-                        </div>
-                      </div>
-                    ) : (
-                      <div className="flex items-center" key={n.id}></div>
-                    )
-                  )}
+                <FeaturedNewsCard />
               </div>
             )}
           </div>

@@ -221,7 +221,7 @@ const TalentSignup = () => {
   });
 
   // player stats
-  const [stats, setStats] = useState({
+  const [stats] = useState({
     localClub: '',
     coach: '',
     trainingSite: '',

@@ -32,7 +32,7 @@ const pFormAnim = {
 
 const OldPasswordForm = () => {
   // get modal and toast from context
-  const { toogleModal, toogleToast } = useContext(AppContext);
+  const { toogleModal } = useContext(AppContext);
 
   // error state
   const [error, setError] = useState('');

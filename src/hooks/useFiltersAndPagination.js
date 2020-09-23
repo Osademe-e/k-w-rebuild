@@ -17,7 +17,6 @@ const useFiltersAndPagination = (
   useEffect(() => {
     setError(null);
     setFetching(true);
-    console.log('useFiltersAndPagination', collection);
     let unsub;
 
     if (page) {

@@ -13,7 +13,7 @@ import PageError from '../components/PageError';
 import { pageAnim, errorDisplayHandler } from '../utils/_helpers';
 
 // hooks
-import usePagination from '../hooks/usePagination';
+import useFiltersAndPagination from '../hooks/useFiltersAndPagination';
 
 const Talents = () => {
   // context
@@ -21,10 +21,19 @@ const Talents = () => {
 
   const [page, setPage] = useState(null);
 
+  // limit
+  const limit = 15;
+
   //   fetch news from firestore
-  const { ordered: talents, nextPage, error, fetching } = usePagination(
+  const {
+    ordered: talents,
+    nextPage,
+    error,
+    fetching,
+  } = useFiltersAndPagination(
     'talents',
-    15,
+    { fieldKey: 'approved', comparismOperator: '==', value: true },
+    limit,
     page,
     {
       orderBy: 'createdAt',
@@ -59,7 +68,7 @@ const Talents = () => {
                     <th className="px-4 py-2 border hidden lg:table-cell">
                       Nationality
                     </th>
-                    {user && profile?.doc.role && (
+                    {user && profile?.doc?.role && (
                       <th className="px-4 py-2 border">Featured</th>
                     )}
                   </tr>

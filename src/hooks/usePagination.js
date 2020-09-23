@@ -12,7 +12,6 @@ const usePagination = (collection, limit, page, { orderBy, order }) => {
   useEffect(() => {
     setError(null);
     setFetching(true);
-    console.log('Pagination', collection);
     let unsub;
     if (orderBy) {
       if (page) {

@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 

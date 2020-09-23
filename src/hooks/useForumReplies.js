@@ -10,7 +10,6 @@ export default (forumDoc, commentDoc, limit, page) => {
 
   useEffect(() => {
     setFetching(true);
-    console.log('useReplies');
     let unsub;
     if (commentDoc) {
       if (page) {

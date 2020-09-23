@@ -14,25 +14,28 @@ const useStructure = (leagues, country, league, type, count = 20) => {
           leagues.forEach((league) => {
             prepared = {
               ...prepared,
-              [league.country.name]: {
-                ...prepared?.[league.country.name],
-                ...league.country,
+              [league?.country?.name]: {
+                ...prepared?.[league?.country?.name],
+                ...league?.country,
                 leagues: {
-                  ...prepared?.[league.country.name]?.leagues,
-                  [league.name]: {
-                    ...prepared?.[league.country.name]?.leagues?.[league.name],
-                    id: league.id,
-                    name: league.name,
-                    year: league.year,
-                    logo: league.logo,
-                    fixtures: league.fixtures
+                  ...prepared?.[league?.country?.name]?.leagues,
+                  [league?.name]: {
+                    ...prepared?.[league?.country?.name]?.leagues?.[
+                      league?.name
+                    ],
+                    id: league?.id,
+                    name: league?.name,
+                    year: league?.year,
+                    logo: league?.logo,
+                    fixtures: league?.fixtures
                       .filter(
                         (f) =>
-                          moment(f.fixture.date).diff(moment(), 'days') >= 1 &&
-                          moment(f.fixture.date).diff(moment(), 'days') <= 7
+                          moment(f?.fixture?.date).diff(moment(), 'days') >=
+                            1 &&
+                          moment(f?.fixture?.date).diff(moment(), 'days') <= 7
                       )
                       .sort(
-                        (a, b) => a.fixture.timestamp - b.fixture.timestamp
+                        (a, b) => a?.fixture?.timestamp - b?.fixture?.timestamp
                       ),
                   },
                 },
@@ -48,33 +51,34 @@ const useStructure = (leagues, country, league, type, count = 20) => {
           leagues
             .filter(
               (league) =>
-                league.country.name.toLowerCase() === country.toLowerCase()
+                league?.country?.name.toLowerCase() === country?.toLowerCase()
             )
             .forEach((league) => {
               prepared = {
                 ...prepared,
-                [league.country.name]: {
-                  ...prepared?.[league.country.name],
-                  ...league.country,
+                [league?.country?.name]: {
+                  ...prepared?.[league?.country?.name],
+                  ...league?.country,
                   leagues: {
-                    ...prepared?.[league.country.name]?.leagues,
-                    [league.name]: {
-                      ...prepared?.[league.country.name]?.leagues?.[
-                        league.name
+                    ...prepared?.[league?.country?.name]?.leagues,
+                    [league?.name]: {
+                      ...prepared?.[league?.country?.name]?.leagues?.[
+                        league?.name
                       ],
-                      id: league.id,
-                      name: league.name,
-                      year: league.year,
-                      logo: league.logo,
-                      fixtures: league.fixtures
+                      id: league?.id,
+                      name: league?.name,
+                      year: league?.year,
+                      logo: league?.logo,
+                      fixtures: league?.fixtures
                         .filter(
                           (f) =>
-                            moment(f.fixture.date).diff(moment(), 'days') >=
+                            moment(f?.fixture?.date).diff(moment(), 'days') >=
                               1 &&
-                            moment(f.fixture.date).diff(moment(), 'days') <= 7
+                            moment(f?.fixture?.date).diff(moment(), 'days') <= 7
                         )
                         .sort(
-                          (a, b) => a.fixture.timestamp - b.fixture.timestamp
+                          (a, b) =>
+                            a?.fixture?.timestamp - b?.fixture?.timestamp
                         ),
                     },
                   },
@@ -88,32 +92,33 @@ const useStructure = (leagues, country, league, type, count = 20) => {
           let prepared = {};
 
           leagues
-            .filter((l) => l.name.toLowerCase() === league.toLowerCase())
+            .filter((l) => l?.name.toLowerCase() === league.toLowerCase())
             .forEach((league) => {
               prepared = {
                 ...prepared,
-                [league.country.name]: {
-                  ...prepared?.[league.country.name],
-                  ...league.country,
+                [league?.country?.name]: {
+                  ...prepared?.[league?.country?.name],
+                  ...league?.country,
                   leagues: {
-                    ...prepared?.[league.country.name]?.leagues,
+                    ...prepared?.[league?.country?.name]?.leagues,
                     [league.name]: {
-                      ...prepared?.[league.country.name]?.leagues?.[
-                        league.name
+                      ...prepared?.[league?.country?.name]?.leagues?.[
+                        league?.name
                       ],
-                      id: league.id,
-                      name: league.name,
-                      year: league.year,
-                      logo: league.logo,
-                      fixtures: league.fixtures
+                      id: league?.id,
+                      name: league?.name,
+                      year: league?.year,
+                      logo: league?.logo,
+                      fixtures: league?.fixtures
                         .filter(
                           (f) =>
-                            moment(f.fixture.date).diff(moment(), 'days') >=
+                            moment(f?.fixture?.date).diff(moment(), 'days') >=
                               1 &&
-                            moment(f.fixture.date).diff(moment(), 'days') <= 7
+                            moment(f?.fixture?.date).diff(moment(), 'days') <= 7
                         )
                         .sort(
-                          (a, b) => a.fixture.timestamp - b.fixture.timestamp
+                          (a, b) =>
+                            a?.fixture?.timestamp - b?.fixture?.timestamp
                         ),
                     },
                   },
@@ -126,28 +131,30 @@ const useStructure = (leagues, country, league, type, count = 20) => {
         if (country && league) {
           const data = leagues.filter(
             (l) =>
-              l.country.name.toLowerCase() === country.toLowerCase() &&
-              l.name.toLowerCase() === league.toLowerCase()
+              l?.country?.name.toLowerCase() === country.toLowerCase() &&
+              l?.name.toLowerCase() === league.toLowerCase()
           )[0];
 
           const prepared = {
-            [data.country.name]: {
-              ...data.country,
+            [data?.country?.name]: {
+              ...data?.country,
               leagues: {
-                [data.name]: {
-                  id: data.id,
-                  name: data.name,
-                  year: data.year,
-                  logo: data.logo,
-                  fixtures: data.fixtures
+                [data?.name]: {
+                  id: data?.id,
+                  name: data?.name,
+                  year: data?.year,
+                  logo: data?.logo,
+                  fixtures: data?.fixtures
                     .slice(0, count)
-                    .sort((a, b) => a.fixture.timestamp - b.fixture.timestamp),
+                    .sort(
+                      (a, b) => a?.fixture?.timestamp - b?.fixture?.timestamp
+                    ),
                 },
               },
             },
           };
 
-          setTotal(data.fixtures.length);
+          setTotal(data?.fixtures?.length);
 
           setResult(prepared);
         }
@@ -158,22 +165,24 @@ const useStructure = (leagues, country, league, type, count = 20) => {
           leagues.forEach((league) => {
             prepared = {
               ...prepared,
-              [league.country.name]: {
-                ...prepared?.[league.country.name],
-                ...league.country,
+              [league?.country?.name]: {
+                ...prepared?.[league?.country?.name],
+                ...league?.country,
                 leagues: {
-                  ...prepared?.[league.country.name]?.leagues,
-                  [league.name]: {
-                    ...prepared?.[league.country.name]?.leagues?.[league.name],
-                    id: league.id,
-                    name: league.name,
-                    year: league.year,
-                    logo: league.logo,
-                    fixtures: league.fixtures
-                      .filter((f) => f.fixture.status.short === 'FT')
+                  ...prepared?.[league?.country?.name]?.leagues,
+                  [league?.name]: {
+                    ...prepared?.[league?.country?.name]?.leagues?.[
+                      league?.name
+                    ],
+                    id: league?.id,
+                    name: league?.name,
+                    year: league?.year,
+                    logo: league?.logo,
+                    fixtures: league?.fixtures
+                      .filter((f) => f?.fixture?.status?.short === 'FT')
                       .slice(0, 15)
                       .sort(
-                        (a, b) => a.fixture.timestamp - b.fixture.timestamp
+                        (a, b) => a?.fixture?.timestamp - b?.fixture?.timestamp
                       ),
                   },
                 },
@@ -189,29 +198,30 @@ const useStructure = (leagues, country, league, type, count = 20) => {
           leagues
             .filter(
               (league) =>
-                league.country.name.toLowerCase() === country.toLowerCase()
+                league?.country?.name.toLowerCase() === country.toLowerCase()
             )
             .forEach((league) => {
               prepared = {
                 ...prepared,
-                [league.country.name]: {
-                  ...prepared?.[league.country.name],
-                  ...league.country,
+                [league?.country?.name]: {
+                  ...prepared?.[league?.country?.name],
+                  ...league?.country,
                   leagues: {
-                    ...prepared?.[league.country.name]?.leagues,
+                    ...prepared?.[league?.country?.name]?.leagues,
                     [league.name]: {
-                      ...prepared?.[league.country.name]?.leagues?.[
-                        league.name
+                      ...prepared?.[league?.country?.name]?.leagues?.[
+                        league?.name
                       ],
-                      id: league.id,
-                      name: league.name,
-                      year: league.year,
-                      logo: league.logo,
-                      fixtures: league.fixtures
-                        .filter((f) => f.fixture.status.short === 'FT')
+                      id: league?.id,
+                      name: league?.name,
+                      year: league?.year,
+                      logo: league?.logo,
+                      fixtures: league?.fixtures
+                        .filter((f) => f?.fixture?.status?.short === 'FT')
                         .slice(0, 15)
                         .sort(
-                          (a, b) => a.fixture.timestamp - b.fixture.timestamp
+                          (a, b) =>
+                            a?.fixture?.timestamp - b?.fixture?.timestamp
                         ),
                     },
                   },
@@ -225,28 +235,29 @@ const useStructure = (leagues, country, league, type, count = 20) => {
           let prepared = {};
 
           leagues
-            .filter((l) => l.name.toLowerCase() === league.toLowerCase())
+            .filter((l) => l?.name.toLowerCase() === league.toLowerCase())
             .forEach((league) => {
               prepared = {
                 ...prepared,
-                [league.country.name]: {
-                  ...prepared?.[league.country.name],
-                  ...league.country,
+                [league?.country?.name]: {
+                  ...prepared?.[league?.country?.name],
+                  ...league?.country,
                   leagues: {
-                    ...prepared?.[league.country.name]?.leagues,
+                    ...prepared?.[league?.country?.name]?.leagues,
                     [league.name]: {
-                      ...prepared?.[league.country.name]?.leagues?.[
+                      ...prepared?.[league?.country?.name]?.leagues?.[
                         league.name
                       ],
-                      id: league.id,
-                      name: league.name,
-                      year: league.year,
-                      logo: league.logo,
-                      fixtures: league.fixtures
-                        .filter((f) => f.fixture.status.short === 'FT')
+                      id: league?.id,
+                      name: league?.name,
+                      year: league?.year,
+                      logo: league?.logo,
+                      fixtures: league?.fixtures
+                        .filter((f) => f?.fixture?.status?.short === 'FT')
                         .slice(0, 15)
                         .sort(
-                          (a, b) => a.fixture.timestamp - b.fixture.timestamp
+                          (a, b) =>
+                            a?.fixture?.timestamp - b?.fixture?.timestamp
                         ),
                     },
                   },
@@ -259,30 +270,33 @@ const useStructure = (leagues, country, league, type, count = 20) => {
         if (country && league) {
           const data = leagues.filter(
             (l) =>
-              l.country.name.toLowerCase() === country.toLowerCase() &&
-              l.name.toLowerCase() === league.toLowerCase()
+              l?.country?.name.toLowerCase() === country.toLowerCase() &&
+              l?.name.toLowerCase() === league.toLowerCase()
           )[0];
 
           const prepared = {
-            [data.country.name]: {
-              ...data.country,
+            [data?.country?.name]: {
+              ...data?.country,
               leagues: {
-                [data.name]: {
-                  id: data.id,
-                  name: data.name,
-                  year: data.year,
-                  logo: data.logo,
-                  fixtures: data.fixtures
-                    .filter((f) => f.fixture.status.short === 'FT')
+                [data?.name]: {
+                  id: data?.id,
+                  name: data?.name,
+                  year: data?.year,
+                  logo: data?.logo,
+                  fixtures: data?.fixtures
+                    .filter((f) => f?.fixture?.status?.short === 'FT')
                     .slice(0, count)
-                    .sort((a, b) => a.fixture.timestamp - b.fixture.timestamp),
+                    .sort(
+                      (a, b) => a?.fixture?.timestamp - b?.fixture?.timestamp
+                    ),
                 },
               },
             },
           };
 
           setTotal(
-            data.fixtures.filter((f) => f.fixture.status.short === 'FT').length
+            data?.fixtures.filter((f) => f?.fixture?.status?.short === 'FT')
+              ?.length
           );
 
           setResult(prepared);

@@ -1,5 +1,5 @@
-import React, { useContext } from 'react';
-import { motion } from 'framer-motion';
+import React, { useContext, useState } from 'react';
+import { motion, AnimateSharedLayout } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
 import { usePaystackPayment } from 'react-paystack';
 import moment from 'moment';
@@ -8,19 +8,22 @@ import cryptoRandomString from 'crypto-random-string';
 // context
 import { AppContext } from '../App';
 
+// hooks
+import usePagination from '../hooks/usePagination';
+
 import kingsportsIcon from '../assets/images/logo svg/Asset 19.svg';
 
 // components
 import HeroContainer from '../components/HeroContainer';
 import Loader from '../components/Loader';
+import PageError from '../components/PageError';
+import PremiumPost from '../components/PremiumPost';
 
 import { pageAnim, errorDisplayHandler } from '../utils/_helpers';
 
-// hooks
-import useFirestoreCollection from '../hooks/useFirestoreCollection';
-
 const Premium = () => {
   const { user, profile, authLoaded } = useContext(AppContext);
+  const [page, setPage] = useState(null);
 
   //   paystack config
   const config = {
@@ -32,10 +35,18 @@ const Premium = () => {
 
   const initializePayment = usePaystackPayment(config);
 
+  // hook
+  const { ordered, nextPage, error, fetching } = usePagination(
+    'premium',
+    15,
+    page,
+    {
+      orderBy: 'createdAt',
+      order: 'desc',
+    }
+  );
   //   location
   const location = useLocation();
-
-  const { ordered, fetching, error } = useFirestoreCollection('premium');
 
   return (
     <motion.div
@@ -50,14 +61,14 @@ const Premium = () => {
       </HeroContainer>
       {/* {error && <div>{errorDisplayHandler(error)}</div>} */}
       <main className="lg:container mx-auto px-2 lg:px-0 my-5">
-        {!authLoaded || profile.fetching || fetching ? (
+        {!authLoaded || profile.fetching ? (
           <Loader />
         ) : !user ||
           (user &&
-            (!profile?.doc?.premium ||
-              (profile?.doc?.premium &&
-                ordered.find((o) => o.userId === user.uid).expAt <
-                  Date.now()))) ? (
+            (!profile?.doc?.subscriptions?.premium?.subscribed ||
+              +moment(
+                profile?.doc?.subscriptions?.premium?.bundle.expAt.toDate()
+              ) < +moment())) ? (
           <div className="rounded shadow-lg w-full lg:w-1/2 mx-auto text-primary-900 overflow-hidden">
             <div className="bg-primary-500 px-3 py-6">
               <img src={kingsportsIcon} alt="kingsport" className="w-24" />
@@ -69,15 +80,16 @@ const Premium = () => {
               </ul>
             </div>
             <div className="bg-primary-900 px-3 py-6 text-primary-100">
-              {(!user || !profile?.doc?.premium) && (
+              {(!user || !profile?.doc?.subscriptions?.premium?.subscribed) && (
                 <h2 className="text-xl border-b border-gray-900">
                   Monthly Subscription
                 </h2>
               )}
               {user &&
-                profile?.doc?.premium &&
-                ordered.find((o) => o.userId === user.uid).expAt <
-                  Date.now() && (
+                profile?.doc?.subscriptions?.premium?.subscribed &&
+                +moment(
+                  profile?.doc?.subscriptions?.premium?.bundle.expAt.toDate()
+                ) < +moment() && (
                   <p className="text-sm border-b border-gray-900">
                     Your Monthly Subscription has{' '}
                     <span className="bg-primary-100 p-1 text-red-600 font-semibold mb-2">
@@ -103,10 +115,11 @@ const Premium = () => {
                 </Link>
               )}
               {user &&
-                (!profile?.doc?.premium ||
-                  (profile?.doc?.premium &&
-                    ordered.find((o) => o.userId === user.uid).expAt <
-                      Date.now())) && (
+                (!profile?.doc?.subscriptions?.premium?.subscribed ||
+                  (profile?.doc?.subscriptions?.premium?.subscribed &&
+                    moment(
+                      profile?.doc?.subscriptions?.premium?.bundle.expAt.toDate()
+                    ) < moment())) && (
                   <button
                     className="btn mt-3 w-full bg-secondary"
                     onClick={() => {
@@ -118,7 +131,26 @@ const Premium = () => {
             </div>
           </div>
         ) : (
-          <div>Premium content</div>
+          <div>
+            {ordered && ordered.length > 0 && (
+              <AnimateSharedLayout>
+                <motion.div layout className="lg:w-1/2 mx-auto">
+                  {ordered.map((post) => (
+                    <PremiumPost key={post.id} post={post} />
+                  ))}
+                </motion.div>
+              </AnimateSharedLayout>
+            )}
+            {!fetching && (
+              <span
+                className="text-xs mt-3 border border-primary-900 hover:shadow inline-block uppercase py-2 px-3 rounded cursor-pointer"
+                onClick={(e) => setPage(nextPage)}>
+                Load More
+              </span>
+            )}
+            {fetching && <Loader />}
+            {error && <PageError message={errorDisplayHandler(error)} />}
+          </div>
         )}
       </main>
     </motion.div>

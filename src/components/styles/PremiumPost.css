@@ -1,0 +1,7 @@
+.premium-header {
+  background-image: url('../../assets//images//bg-trimmed-1.png');
+  background-size: 250%;
+  background-position-x: -20px;
+  background-color: #edd447;
+  background-blend-mode: hard-light;
+}

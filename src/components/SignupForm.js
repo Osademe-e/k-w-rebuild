@@ -49,8 +49,6 @@ const SignupForm = () => {
         .doc(user.uid)
         .set({ firstName, lastName, email, createdAt: timestamp() });
 
-      await user.sendEmailVerification();
-
       return user;
     } catch (error) {
       throw new Error(error);

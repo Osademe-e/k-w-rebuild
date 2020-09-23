@@ -15,12 +15,6 @@ import { errorDisplayHandler } from '../utils/_helpers';
 // components imports
 import FormError from './FormError';
 
-// icons
-import { SigninIllustration } from '../assets/icons/svg';
-import facebook from '../assets/icons/facebook.svg';
-import google from '../assets/icons/google.svg';
-import twitter from '../assets/icons/twitter.svg';
-
 // scoped style
 import './styles/Forms.css';
 
@@ -40,9 +34,6 @@ const LoginForm = () => {
   // form error handler
   const [error, setError] = useState('');
 
-  // var to disable social links button
-  const [disableSocials, setDisableSocials] = useState(false);
-
   // firebase auth object
   const { auth } = useFirebase();
 
@@ -52,54 +43,6 @@ const LoginForm = () => {
       open: true,
       component: 'forgot password',
     });
-  };
-
-  // function to login in with social accounts
-  const loginWithProvider = async (providerName) => {
-    setDisableSocials(true);
-    try {
-      if (providerName === 'google') {
-        // google login flow with firebase
-        let provider = new auth.GoogleAuthProvider();
-
-        provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
-
-        auth().useDeviceLanguage();
-
-        provider.setCustomParameters({
-          login_hint: 'user@example.com',
-        });
-
-        auth().signInWithRedirect(provider);
-      }
-
-      if (providerName === 'facebook') {
-        // google login flow with firebase
-        let provider = new auth.FacebookAuthProvider();
-
-        provider.addScope('user_birthday');
-
-        auth().useDeviceLanguage();
-
-        provider.setCustomParameters({
-          display: 'popup',
-        });
-
-        auth().signInWithRedirect(provider);
-      }
-
-      if (providerName === 'twitter') {
-        // google login flow with firebase
-        let provider = new auth.TwitterAuthProvider();
-
-        auth().useDeviceLanguage();
-
-        auth().signInWithRedirect(provider);
-      }
-    } catch (error) {
-      console.log(error);
-      setError(errorDisplayHandler(error));
-    }
   };
 
   const formik = useFormik({
@@ -263,32 +206,6 @@ const LoginForm = () => {
             />
             <p>or sign in with</p>
             <hr className="w-1/2" />
-          </div>
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 text-center text-xs mt-6 items-center justify-center">
-            <button
-              type="button"
-              className="bg-blue-700 text-white rounded py-2 px-4"
-              onClick={() => loginWithProvider('facebook')}
-              disabled={disableSocials}>
-              <img src={facebook} alt="facebook logo" className="w-3 inline" />
-              &nbsp; Facebook
-            </button>
-            <button
-              type="button"
-              onClick={() => loginWithProvider('twitter')}
-              className="bg-blue-400 text-white rounded py-2 px-4"
-              disabled={disableSocials}>
-              <img src={twitter} alt="facebook logo" className="w-3 inline" />
-              &nbsp; Twitter
-            </button>
-            <button
-              type="button"
-              onClick={() => loginWithProvider('google')}
-              className="bg-red-600 text-white rounded py-2 px-4"
-              disabled={disableSocials}>
-              <img src={google} alt="facebook logo" className="w-3 inline" />
-              &nbsp; Google
-            </button>
           </div>
         </form>
       </div>
