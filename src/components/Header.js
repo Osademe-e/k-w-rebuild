@@ -201,11 +201,6 @@ const Header = ({ featuredTalents }) => {
                     </li>
                     <li
                       className={`flex lg:block text-base lg:text-sm py-2 lg:py-0 lg:mr-3 hover:font-semibold hover:text-primary-900`}>
-                      {/* <img
-                    src={talentIcon}
-                    alt="talent"
-                    className="lg:hidden w-4 mr-2"
-                  /> */}
                       <span className="material-icons mr-2 lg:hidden">
                         local_fire_department
                       </span>
@@ -217,6 +212,21 @@ const Header = ({ featuredTalents }) => {
                           state: from,
                         }}>
                         Talents
+                      </NavLink>
+                    </li>
+                    <li
+                      className={`flex lg:block text-base lg:text-sm py-2 lg:py-0 lg:mr-3 hover:font-semibold hover:text-primary-900`}>
+                      <span className="material-icons mr-2 lg:hidden">
+                        local_fire_department
+                      </span>
+                      <NavLink
+                        exact
+                        activeClassName="text-primary-900 font-semibold"
+                        to={{
+                          pathname: '/scouts',
+                          state: from,
+                        }}>
+                        Scouts
                       </NavLink>
                     </li>
                     <li

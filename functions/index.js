@@ -36,43 +36,52 @@ exports.updateLeague = functions.https.onRequest((req, res) => {
           },
         });
 
-        // construct data structure for storage
-        const docId = response[0].league.id.toString();
-        const docData = {
-          country: response[0].country,
-          year: Math.max(...response[0].seasons.map((s) => Number(s.year))),
-          name: response[0].league.name,
-          logo: response[0].league.logo,
-          type: response[0].league.type,
-        };
+        if (response.length > 0) {
+          // construct data structure for storage
+          const docId = response[0].league.id.toString();
+          const docData = {
+            country: response[0].country,
+            year: Math.max(...response[0].seasons.map((s) => Number(s.year))),
+            name: response[0].league.name,
+            logo: response[0].league.logo,
+            type: response[0].league.type,
+          };
 
-        // get league fixtures
-        const {
-          data: { response: fixtures },
-        } = await axios({
-          method: 'GET',
-          url: 'https://api-football-beta.p.rapidapi.com/fixtures',
-          headers: {
-            'content-type': 'application/octet-stream',
-            'x-rapidapi-host': 'api-football-beta.p.rapidapi.com',
-            'x-rapidapi-key': functions.config().kingsports.rapidapikey,
-            useQueryString: true,
-          },
-          params: {
-            league: docId,
-            season: docData.year,
-          },
-        });
+          // get league fixtures
+          const {
+            data: { response: fixtures },
+          } = await axios({
+            method: 'GET',
+            url: 'https://api-football-beta.p.rapidapi.com/fixtures',
+            headers: {
+              'content-type': 'application/octet-stream',
+              'x-rapidapi-host': 'api-football-beta.p.rapidapi.com',
+              'x-rapidapi-key': functions.config().kingsports.rapidapikey,
+              useQueryString: true,
+            },
+            params: {
+              league: docId,
+              season: docData.year,
+            },
+          });
 
-        docData.fixtures = fixtures;
+          docData.fixtures = fixtures;
 
-        // save to db
-        await db.collection('leagues').doc(docId).set(docData);
+          // save to db
+          await db.collection('leagues').doc(docId).set(docData);
 
-        res.writeHead(200, { 'Content-Type': 'application/json' });
-        return res.end(
-          JSON.stringify({ message: 'Database update successfull.' })
-        );
+          res.writeHead(200, { 'Content-Type': 'application/json' });
+          return res.end(
+            JSON.stringify({ message: 'Database update successfull.' })
+          );
+        } else {
+          res.writeHead(401, { 'Content-Type': 'application/json' });
+          return res.end(
+            JSON.stringify({
+              error: 'Season not started.',
+            })
+          );
+        }
       } else {
         res.writeHead(401, { 'Content-Type': 'application/json' });
         return res.end(
@@ -92,18 +101,30 @@ exports.updateLeague = functions.https.onRequest((req, res) => {
   });
 });
 
-// collection leagues
-// id - league id from rapidapi
-// {
-//     country: {
-//         name: String,
-//         code: String,
-//         flag: Url
-//     },
+// // webhook for successfull withdrawal
+// exports.transfer = functions.https.onRequest(async (req, res) => {
+//   //validate event
+//   let hash = crypto
+//     .createHmac('sha512' /*, SecretPaystackKey*/)
+//     .update(JSON.stringify(req.body))
+//     .digest('hex');
 
-//     id: Number,
-//     name:String,
-//     type:String,
-//     logo:Url,
-//     Year: String,
-// }
+//   if (hash === req.headers['x-paystack-signature']) {
+//     // Retrieve the request's body
+//     let { event, data } = req.body;
+
+//     if (event === 'charge.success') {
+//       // data.metadata
+//       const { userId } = data.metadata;
+
+//       try {
+//         let docRef = db.collection('users').doc(userId);
+//       } catch (error) {
+//         console.log(error);
+//       }
+//     }
+//     res.sendStatus(200);
+//   } else {
+//     res.sendStatus(404);
+//   }
+// });

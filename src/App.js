@@ -27,6 +27,7 @@ import PostForm from './components/PostForm';
 import EditPostForm from './components/EditPostForm';
 import PremiumPostForm from './components/PremiumPostForm';
 import EditPremiumPost from './components/EditPremiumPostForm';
+import UnfeatureTalent from './components/UnfeatureTalent'
 
 // pages
 import HomePage from './pages/Home';
@@ -101,6 +102,7 @@ function App() {
     fixture: null,
     post: null,
     premium: null,
+    featuredTalents: null,
   });
 
   // initial toast state
@@ -353,6 +355,9 @@ function App() {
 
           {/* new password */}
           {openModal.component === 'new password' && <NewPasswordForm />}
+
+          {/* unfeature talent */}
+          {openModal.component === 'unfeature talent' && <UnfeatureTalent />}
 
           {/* posts */}
           {(openModal.component === 'Make News Post' ||

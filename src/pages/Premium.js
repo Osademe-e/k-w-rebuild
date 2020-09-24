@@ -26,12 +26,15 @@ const Premium = () => {
   const [page, setPage] = useState(null);
 
   //   paystack config
-  const config = {
+  const [config] = useState(() => ({
     reference: cryptoRandomString({ length: 15 }),
     email: user?.email,
     amount: 2000000,
     publicKey: 'pk_test_134e2c76e4e4fda92db39f612614077a241b16f1',
-  };
+    metadata: {
+      userId: user?.uid,
+    },
+  }));
 
   const initializePayment = usePaystackPayment(config);
 

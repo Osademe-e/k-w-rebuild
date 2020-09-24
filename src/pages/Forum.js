@@ -56,35 +56,32 @@ const Forum = () => {
         </h2>
       </HeroContainer>
       <main className="lg:container mx-auto px-2 lg:px-0 my-5">
-        <div className="lg:flex lg:container mx-auto px-2 lg:px-0">
-          <div>
-            {forum && forum.length === 0 ? (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{
-                  opacity: 1,
-                  transition: { duration: 1, easings: ['easeIn'] },
-                }}
-                className="text-center font-semibold text-lg">
-                {' '}
-                No news at the moment{' '}
-              </motion.div>
-            ) : (
-              <InfoCard info={forum} collection="forum" />
+        <div>
+          {forum && forum.length === 0 ? (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{
+                opacity: 1,
+                transition: { duration: 1, easings: ['easeIn'] },
+              }}
+              className="text-center font-semibold text-lg">
+              {' '}
+              No forum post at the moment
+            </motion.div>
+          ) : (
+            <InfoCard info={forum} collection="forum" />
+          )}
+          <div className="mt-8 text-center">
+            {!fetching && (
+              <span
+                className="text-xs mt-3 border border-primary-900 hover:shadow inline-block uppercase py-2 px-3 rounded cursor-pointer"
+                onClick={(e) => setPage(nextPage)}>
+                Load More
+              </span>
             )}
-            <div className="mt-8 text-center">
-              {!fetching && (
-                <span
-                  className="text-xs mt-3 border border-primary-900 hover:shadow inline-block uppercase py-2 px-3 rounded cursor-pointer"
-                  onClick={(e) => setPage(nextPage)}>
-                  Load More
-                </span>
-              )}
-              {fetching && <Loader />}
-              {error && <PageError message={errorDisplayHandler(error)} />}
-            </div>
+            {fetching && <Loader />}
+            {error && <PageError message={errorDisplayHandler(error)} />}
           </div>
-          <aside className="hidden lg:block">hello</aside>
         </div>
       </main>
     </motion.div>

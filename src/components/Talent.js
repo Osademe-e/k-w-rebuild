@@ -28,17 +28,40 @@ const Talent = ({ talent, index }) => {
         message: `Updating ${name}'s profile...`,
       });
 
-      await firestore
+      let talents = await firestore
         .collection('talents')
-        .doc(id)
-        .update({ featured: !isFeatured });
+        .where('featured', '==', true)
+        .get();
 
-      toogleModal({
-        component: '',
-        open: false,
-        message: null,
-      });
-      toogleToast(`${name}'s profile updated.`);
+      if (talents.docs.length > 2) {
+        let ordered = [];
+        talents.docs.forEach((doc) => {
+          ordered.push({
+            id: doc.id,
+            ...doc.data(),
+          });
+        });
+        toogleModal({
+          component: 'unfeature talent',
+          featuredTalents: ordered,
+          message: null,
+        });
+        toogleToast(
+          `Your already have 3 featured talents. Please unfeature one before featuring another.`
+        );
+      } else {
+        await firestore
+          .collection('talents')
+          .doc(id)
+          .update({ featured: !isFeatured });
+
+        toogleModal({
+          component: '',
+          open: false,
+          message: null,
+        });
+        toogleToast(`${name}'s profile updated.`);
+      }
     } catch (error) {
       console.log(error);
       toogleModal({
@@ -68,7 +91,7 @@ const Talent = ({ talent, index }) => {
         </Link>
       </td>
       <td className="px-4 py-2 border-b hidden lg:table-cell">
-        {talent.stats.position[0]}
+        {talent.stats.position}
       </td>
       <td className="px-4 py-2 border-b hidden lg:table-cell">
         {talent.profile.nationality}
@@ -87,7 +110,7 @@ const Talent = ({ talent, index }) => {
                     toogleTalentFeatured(
                       talent.id,
                       talent.featured,
-                      talent.fullName
+                      talent.profile.fullName
                     )
                   }
                   className="relative z-10 opacity-0"

@@ -10,15 +10,23 @@ import PageError from '../components/PageError';
 import { pageAnim, errorDisplayHandler } from '../utils/_helpers';
 
 // hooks
-import usePagination from '../hooks/usePagination';
+import useFiltersAndPagination from '../hooks/useFiltersAndPagination';
 
 const Scouts = () => {
   const [page, setPage] = useState(null);
 
-  //   fetch news from firestore
-  const { ordered: scouts, nextPage, error, fetching } = usePagination(
+  // limit
+  const limit = 15;
+
+  const {
+    ordered: scouts,
+    nextPage,
+    error,
+    fetching,
+  } = useFiltersAndPagination(
     'scouts',
-    15,
+    { fieldKey: 'approved', comparismOperator: '==', value: true },
+    limit,
     page,
     {
       orderBy: 'createdAt',

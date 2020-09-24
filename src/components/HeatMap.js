@@ -32,20 +32,22 @@ const HeatMap = ({ position }) => {
 
       max = Math.max(max, val);
       let point = {
-        x:
+        x: Math.floor(
           generateHeatMap(getPositionAbbrev(position)).x[
             Math.floor(
               Math.random() *
                 generateHeatMap(getPositionAbbrev(position)).x.length
             )
-          ] * width,
-        y:
+          ] * width
+        ),
+        y: Math.floor(
           generateHeatMap(getPositionAbbrev(position)).y[
             Math.floor(
               Math.random() *
                 generateHeatMap(getPositionAbbrev(position)).y.length
             )
-          ] * height,
+          ] * height
+        ),
         value: val,
         // radius configuration on point basis
         radius: radius,

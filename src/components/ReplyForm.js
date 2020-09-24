@@ -77,6 +77,7 @@ const RelpyForm = () => {
           reply: null,
         });
       } catch (error) {
+        console.log(error);
         setSubmitting(false);
         toogleToast(errorDisplayHandler(error));
       }

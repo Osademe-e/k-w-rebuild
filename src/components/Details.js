@@ -27,7 +27,9 @@ import { errorDisplayHandler } from '../utils/_helpers';
 const Details = ({ details, collection }) => {
   const firestore = useFirestore();
   const storage = useStorage();
-  const { user, authLoaded, toogleToast, toogleModal } = useContext(AppContext);
+  const { user, authLoaded, profile, toogleToast, toogleModal } = useContext(
+    AppContext
+  );
   const location = useLocation();
   const history = useHistory();
   const [forumDoc, setForumDoc] = useState(null);
@@ -281,27 +283,29 @@ const Details = ({ details, collection }) => {
         <div
           dangerouslySetInnerHTML={{ __html: details.body }}
           className="text-sm font-light leading-relaxed mb-4 details__main--body px-2"></div>
-        <div className="p-2 flex items-center text-xs">
-          <span
-            className="material-icons mr-2 text-gray-600 cursor-pointer opacity-75 hover:opacity-100 hover:text-secondary"
-            onClick={() =>
-              toogleModal({
-                open: true,
-                component: 'edit post',
-                post: {
-                  collection,
-                  details,
-                },
-              })
-            }>
-            edit
-          </span>
-          <span
-            className="material-icons text-gray-600 cursor-pointer opacity-75 hover:opacity-100 hover:text-red-600"
-            onClick={deletePost}>
-            delete
-          </span>
-        </div>
+        {user && profile?.doc?.role === 'super admin' && (
+          <div className="p-2 flex items-center text-xs">
+            <span
+              className="material-icons mr-2 text-gray-600 cursor-pointer opacity-75 hover:opacity-100 hover:text-secondary"
+              onClick={() =>
+                toogleModal({
+                  open: true,
+                  component: 'edit post',
+                  post: {
+                    collection,
+                    details,
+                  },
+                })
+              }>
+              edit
+            </span>
+            <span
+              className="material-icons text-gray-600 cursor-pointer opacity-75 hover:opacity-100 hover:text-red-600"
+              onClick={deletePost}>
+              delete
+            </span>
+          </div>
+        )}
         {collection === 'forum' && (
           <div className="px-2">
             <p className="font-semibold">{`(${

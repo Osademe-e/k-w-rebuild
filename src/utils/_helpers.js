@@ -612,7 +612,7 @@ export const abilityTextReadable = (ability) => {
 export const updateLeague = (reqData, cb) => {
   axios({
     method: 'post',
-    url: `/resolveAccountNumber`,
+    url: `https://us-central1-kingsports-bc92d.cloudfunctions.net/updateLeague`,
     headers: {
       'Content-Type': 'application/json',
     },
@@ -621,7 +621,7 @@ export const updateLeague = (reqData, cb) => {
     },
   })
     .then(({ data: { message } }) => {
-      return cb(message);
+      return cb(null, message);
     })
     .catch((error) => {
       if (error.response) {
