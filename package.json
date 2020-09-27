@@ -9,7 +9,7 @@
     "@tinymce/tinymce-react": "^3.6.0",
     "axios": "^0.20.0",
     "crypto-random-string": "^3.2.0",
-    "firebase": "^7.18.0",
+    "firebase": "^7.21.1",
     "formik": "^2.1.5",
     "framer-motion": "^2.4.2",
     "heatmap.js": "^2.0.5",

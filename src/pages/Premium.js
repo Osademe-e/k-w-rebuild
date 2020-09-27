@@ -30,7 +30,7 @@ const Premium = () => {
     reference: cryptoRandomString({ length: 15 }),
     email: user?.email,
     amount: 2000000,
-    publicKey: 'pk_test_134e2c76e4e4fda92db39f612614077a241b16f1',
+    publicKey: 'pk_test_820c17e4a0b7e7b92d0a8020a1831dd5cb9ede57',
     metadata: {
       userId: user?.uid,
     },
@@ -68,6 +68,7 @@ const Premium = () => {
           <Loader />
         ) : !user ||
           (user &&
+            profile?.doc?.role !== 'super admin' &&
             (!profile?.doc?.subscriptions?.premium?.subscribed ||
               +moment(
                 profile?.doc?.subscriptions?.premium?.bundle.expAt.toDate()

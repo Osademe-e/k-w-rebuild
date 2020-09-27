@@ -2,9 +2,11 @@ const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const cors = require('cors')({ origin: true });
 const axios = require('axios');
+const crypto = require('crypto');
 
 admin.initializeApp();
-db = admin.firestore();
+const db = admin.firestore();
+const FieldValue = admin.firestore.FieldValue;
 
 exports.updateLeague = functions.https.onRequest((req, res) => {
   cors(req, res, async () => {
@@ -101,30 +103,98 @@ exports.updateLeague = functions.https.onRequest((req, res) => {
   });
 });
 
-// // webhook for successfull withdrawal
-// exports.transfer = functions.https.onRequest(async (req, res) => {
-//   //validate event
-//   let hash = crypto
-//     .createHmac('sha512' /*, SecretPaystackKey*/)
-//     .update(JSON.stringify(req.body))
-//     .digest('hex');
+// webhook for successfull withdrawal
+exports.transfer = functions.https.onRequest(async (req, res) => {
+  //validate event
+  let hash = crypto
+    .createHmac('sha512', functions.config().kingsports.paystackkey)
+    .update(JSON.stringify(req.body))
+    .digest('hex');
 
-//   if (hash === req.headers['x-paystack-signature']) {
-//     // Retrieve the request's body
-//     let { event, data } = req.body;
+  if (hash === req.headers['x-paystack-signature']) {
+    // Retrieve the request's body
+    let { event, data } = req.body;
 
-//     if (event === 'charge.success') {
-//       // data.metadata
-//       const { userId } = data.metadata;
+    if (event === 'charge.success') {
+      // data.metadata
+      const { userId } = data.metadata;
 
-//       try {
-//         let docRef = db.collection('users').doc(userId);
-//       } catch (error) {
-//         console.log(error);
-//       }
-//     }
-//     res.sendStatus(200);
-//   } else {
-//     res.sendStatus(404);
-//   }
-// });
+      try {
+        const userDoc = await db.collection('users').doc(userId).get();
+
+        let update = {};
+
+        if (userDoc.data().subscriptions) {
+          if (userDoc.data().subscriptions.premium) {
+            update = {
+              subscriptions: {
+                ...userDoc.data().subscriptions,
+                premium: {
+                  ...userDoc.data().subscriptions.premium,
+                  subscribed: true,
+                  bundle: {
+                    ...userDoc.data().subscriptions.premium.bundle,
+                    subAt: FieldValue.serverTimestamp(),
+                    expAt: admin.firestore.Timestamp.fromDate(
+                      new Date(
+                        new Date(data.created_at).getTime() +
+                          1000 * 60 * 60 * 24 * 30
+                      )
+                    ),
+                    trxref: data.reference,
+                  },
+                },
+              },
+            };
+          } else {
+            update = {
+              subscriptions: {
+                ...userDoc.data().subscriptions,
+                premium: {
+                  subscribed: true,
+                  bundle: {
+                    subAt: FieldValue.serverTimestamp(),
+                    expAt: admin.firestore.Timestamp.fromDate(
+                      new Date(
+                        new Date(data.created_at).getTime() +
+                          1000 * 60 * 60 * 24 * 30
+                      )
+                    ),
+                    trxref: data.reference,
+                  },
+                },
+              },
+            };
+          }
+        } else {
+          update = {
+            subscriptions: {
+              premium: {
+                subscribed: true,
+                bundle: {
+                  ...userDoc.data().subscriptions.premium.bundle,
+                  subAt: FieldValue.serverTimestamp(),
+                  expAt: admin.firestore.Timestamp.fromDate(
+                    new Date(
+                      new Date(data.created_at).getTime() +
+                        1000 * 60 * 60 * 24 * 30
+                    )
+                  ),
+                  trxref: data.reference,
+                },
+              },
+            },
+          };
+        }
+
+        await db.collection('users').doc(userId).update(update);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    res.sendStatus(200);
+  } else {
+    res.sendStatus(404);
+  }
+});

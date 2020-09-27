@@ -1,66 +1,79 @@
-// rules_version = '2';
-// service cloud.firestore {
-//   match /databases/{database}/documents {
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
 
-//     // get document from DB
-//     function getDoc(collection, docId) {
-//       return get(/databases/$(database)/documents/$(collection)/$(docId))
-//     }
+    // get document from DB
+    function getDoc(collection, docId) {
+      return get(/databases/$(database)/documents/$(collection)/$(docId))
+    }
 
-//    match /users/{userId} {
-//   	allow read, update: if request.auth.uid == userId || getDoc('users', request.auth.uid).data.role == 'super admin';
-//     allow delete: if false;
+    // check if a doc exixts
+    function docExist(collection, docId) {
+      return exists(/databases/$(database)/documents/$(collection)/$(docId))
+    }
 
-//     allow create: if request.auth.uid != null;
-//    }
+   match /users/{userId} {
+  	allow read, update: if request.auth.uid == userId || getDoc('users', request.auth.uid).data.role == 'super admin';
+    allow delete: if false;
+
+    allow create: if request.auth.uid != null;
+   }
    
-//    match /forum/{forumId} {
-//      allow read, write: if request.auth.uid != null;
-//     //  allow create, delete: if request.auth.uid != null && getDoc('users', request.auth.uid).data.role == 'super admin';
+   match /forum/{forumId} {
+     allow read: if true;
+     allow create, delete: if request.auth.uid != null && getDoc('users', request.auth.uid).data.role == 'super admin';
+    allow update: if request.auth.uid != null && (getDoc('users', request.auth.uid).data.role == 'super admin' || request.resource.data.diff(resource.data).affectedKeys().hasOnly(['commentCount']))
 
-//       // match /comments/{commentId} {
-//       //   allow read: if true;
-//       //   allow create, update: if request.auth.uid != null;
-//       //   allow delete: if request.auth.uid == get(/databases/$(database)/documents/forum/$(forumId)/comments/$(commentId)).data.id;
+      match /comments/{commentId} {
+        allow read: if true;
+        allow create: if request.auth.uid != null;
 
-//       //   match /replies/{replyId} {
-//       //     allow read: if true;
-//       //     allow create: if request.auth.uid != null;
-//       //     allow delete: if request.auth.uid == get(/databases/$(database)/documents/forum/$(forumId)/comments/$(commentId)/replies/$(replyId)).data.id 
-//       //     || 
-//       //     get(/databases/$(database)/documents/forum/$(forumId)/comments/$(commentId)).data.id == get(/databases/$(database)/documents/forum/$(forumId)/comments/$(commentId)/replies/$(replyId)).data.id;
+        allow delete: if request.auth.uid != null && (request.auth.uid == get(/databases/$(database)/documents/forum/$(forumId)/comments/$(commentId)).data.id || getDoc('users', request.auth.uid).data.role == 'super admin');
 
-//       //     allow update: if request.auth.uid == get(/databases/$(database)/documents/forum/$(forumId)/comments/$(commentId)/replies/$(replyId)).data.id ;
-//       //   }
-//       // }
-//    }
+        allow update: if request.auth.uid != null && (request.auth.uid == get(/databases/$(database)/documents/forum/$(forumId)/comments/$(commentId)).data.id || request.resource.data.diff(resource.data).affectedKeys().hasOnly(['replyCount']))
+
+        match /replies/{replyId} {
+          allow read: if true;
+          allow create: if request.auth.uid != null;
+
+          allow delete: if request.auth.uid != null && (request.auth.uid == get(/databases/$(database)/documents/forum/$(forumId)/comments/$(commentId)/replies/$(replyId)).data.id  || getDoc('users', request.auth.uid).data.role == 'super admin' || request.auth.uid == get(/databases/$(database)/documents/forum/$(forumId)/comments/$(commentId)).data.id);
+        
+          allow update: if request.auth.uid != null && request.auth.uid == get(/databases/$(database)/documents/forum/$(forumId)/comments/$(commentId)/replies/$(replyId)).data.id ;
+        }
+      }
+   }
    
-//    match /news/{newsId} {
-//    	allow read: if true;
-//     allow write: if request.auth.uid != null && getDoc('users', request.auth.uid).data.role == 'super admin';
-//    }
+   match /news/{newsId} {
+   	allow read: if true;
+    allow write: if request.auth.uid != null && getDoc('users', request.auth.uid).data.role == 'super admin';
+   }
    
-//    match /premium/{premiumId} {
-//      allow write: if request.auth.uid != null && getDoc('users', request.auth.uid).data.role == 'super admin';
-//      allow read: if true;
-//    }
+   match /premium/{premiumId} {
+     allow write: if request.auth.uid != null && getDoc('users', request.auth.uid).data.role == 'super admin';
+     allow read: if getDoc('users', request.auth.uid).data.role == 'super admin' || (getDoc('users', request.auth.uid).data.subscriptions != null && getDoc('users', request.auth.uid).data.subscriptions.premium != null && getDoc('users', request.auth.uid).data.subscriptions.premium.subscribed == true)
+   }
 
-//    match /scouts/{scoutId} {
-//     allow read: if true;
-//    allow write: if request.auth.uid == request.resource.data.userId || getDoc('users', request.auth.uid).data.role == 'super admin';
-//    }
+   match /scouts/{scoutId} {
+    allow read: if true;
+    allow create: if request.auth.uid != null && !docExist('scouts', request.auth.uid);
+    allow update: if request.auth.uid != null && (request.auth.uid == scoutId  && !request.resource.data.diff(resource.data).affectedKeys().hasAny(['approved']))|| (getDoc('users', request.auth.uid).data.role == 'super admin' && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['approved']));
+    allow delete: if false;
+   }
    
-//    match /leagues/{leagueId} {
-//    allow read: if true;
-//    allow write: if false;
-//    }
+   match /leagues/{leagueId} {
+   allow read: if true;
+   allow write: if false;
+   }
 
-//    match /talents/{talentId} {
-//    allow read: if true;
-//    allow write: if request.auth.uid == request.resource.data.userId || getDoc('users', request.auth.uid).data.role == 'super admin';
-//    }
-//   }
-// }
+   match /talents/{talentId} {
+    allow read: if true;
+    allow create: if request.auth.uid != null && !docExist('talents', request.auth.uid);
+      allow delete: if false;
+
+    allow update: if request.auth.uid != null && ((request.auth.uid == talentId  && !request.resource.data.diff(resource.data).affectedKeys().hasAny(['adminReview', 'scoutComments', 'approved'])) || (getDoc('users', request.auth.uid).data.role == 'super admin' && request.resource.data.diff(resource.data).affectedKeys().hasAny(['adminReview','approved'])) || (docExist('scouts', request.auth.uid) && getDoc('scouts', request.auth.uid).data.approved == true && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['scoutComments'])))
+    }
+  }
+}
 // rules_version = '2';
 // service cloud.firestore {
 //   match /databases/{database}/documents {
@@ -97,12 +110,12 @@
 //   }
 // }
 
-rules_version = '2';
-service cloud.firestore {
-  match /databases/{database}/documents {
+// rules_version = '2';
+// service cloud.firestore {
+//   match /databases/{database}/documents {
 
-    match /{document=**} {
-      allow read, write: if request.time < timestamp.date(2021, 12, 4);
-    }
-  }
-}
+//     match /{document=**} {
+//       allow read, write: if request.time < timestamp.date(2021, 12, 4);
+//     }
+//   }
+// }

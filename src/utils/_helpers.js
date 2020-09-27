@@ -10,8 +10,20 @@ export const errorDisplayHandler = (error) => {
         return 'Invalid email/password';
       case 'auth/invalid-email':
         return error.message;
+      case 'auth/email-already-exists':
+        return error.message;
+      case 'auth/insufficient-permission':
+        return 'Unauthorized';
+      case 'auth/invalid-display-name':
+        return error.message;
       case 'auth/user-cancelled':
         return error.message;
+      case 'storage/object-not-found':
+        return error.message;
+      case 'storage/unauthorized':
+        return 'Unauthorized';
+      case 'storage/unauthenticated':
+        return 'Unauthorized';
       default:
         // error users should not see
         return 'Something went wrong. Please refresh the page and try again, if error persist, contact admin.';
