@@ -25,69 +25,6 @@ const AdminLeague = ({ league }) => {
     });
 
     try {
-      // // get current season of the league
-      // const {
-      //   data: { response },
-      // } = await axios({
-      //   method: 'GET',
-      //   url: 'https://api-football-beta.p.rapidapi.com/leagues',
-      //   headers: {
-      //     'content-type': 'application/octet-stream',
-      //     'x-rapidapi-host': 'api-football-beta.p.rapidapi.com',
-      //     'x-rapidapi-key':
-      //       '6ca93d05bfmsh84200550229e8dfp10d12fjsn21cd729ddadf',
-      //     useQueryString: true,
-      //   },
-      //   params: {
-      //     name: leagueName,
-      //     current: 'true',
-      //     country,
-      //   },
-      // });
-
-      // // construct data structure for storage
-      // if (response.length > 0) {
-      //   const docId = response[0].league.id.toString();
-      //   const docData = {
-      //     country: response[0].country,
-      //     year: Math.max(...response[0].seasons.map((s) => Number(s.year))),
-      //     name: response[0].league.name,
-      //     logo: response[0].league.logo,
-      //     type: response[0].league.type,
-      //   };
-
-      //   // get league fixtures
-      //   const {
-      //     data: { response: fixtures },
-      //   } = await axios({
-      //     method: 'GET',
-      //     url: 'https://api-football-beta.p.rapidapi.com/fixtures',
-      //     headers: {
-      //       'content-type': 'application/octet-stream',
-      //       'x-rapidapi-host': 'api-football-beta.p.rapidapi.com',
-      //       'x-rapidapi-key':
-      //         '6ca93d05bfmsh84200550229e8dfp10d12fjsn21cd729ddadf',
-      //       useQueryString: true,
-      //     },
-      //     params: {
-      //       league: docId,
-      //       season: docData.year,
-      //     },
-      //   });
-
-      //   docData.fixtures = fixtures;
-
-      //   // save to db
-      //   await firestore.collection('leagues').doc(docId).set(docData);
-      // } else {
-      //   toogleModal({
-      //     open: false,
-      //     component: '',
-      //     message: null,
-      //   });
-      //   toogleToast('Season not started');
-      // }
-
       const idToken = await firebase.auth().currentUser.getIdToken(true);
       updateLeague(
         {
@@ -103,7 +40,6 @@ const AdminLeague = ({ league }) => {
               component: '',
               message: null,
             });
-            console.log(error);
             return toogleToast(errorDisplayHandler(error));
           }
         }
