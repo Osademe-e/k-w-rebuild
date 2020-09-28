@@ -206,7 +206,7 @@ const Videos = ({ stats }) => {
             <motion.h1
               layout
               className="uppercase font-semibold text-sm pb-2 border-b border-gray-200">
-              Videos
+              Talent Videos
             </motion.h1>
             {!showVideoForm &&
               user?.uid === id &&

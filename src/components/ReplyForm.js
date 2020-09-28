@@ -32,7 +32,9 @@ const replyFormVariants = {
 };
 
 const RelpyForm = () => {
-  const { modal, toogleModal, user, toogleToast } = useContext(AppContext);
+  const { modal, toogleModal, user, toogleToast, profile } = useContext(
+    AppContext
+  );
 
   const firestore = useFirestore();
 
@@ -48,7 +50,9 @@ const RelpyForm = () => {
         const userReply = {
           reply,
           createdAt: timestamp(),
-          name: user.displayName,
+          name:
+            user.displayName ||
+            `${profile?.doc?.lastName} ${profile?.doc?.firstName}`,
           id: user.uid,
         };
 

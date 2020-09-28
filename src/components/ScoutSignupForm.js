@@ -43,7 +43,7 @@ const ScoutSignupForm = () => {
     setTempSrc(null);
     const file = e.target.files[0];
     if (file) {
-      const validateFile = fileChecker(file, 2100000, [
+      const validateFile = fileChecker(file, 51000000, [
         'image/jpeg',
         'image/png',
         'image/jpg',
@@ -85,9 +85,9 @@ const ScoutSignupForm = () => {
       email: yup.string().email('Invalid Email Address').required('Required'),
       phoneNumber: yup
         .string()
-        .length(10, 'Must be exactly 11 characters')
+        .length(11, 'Must be exactly 11 characters')
         .required('Required'),
-      altPhoneNumber: yup.string().length(10, 'Must be exactly 11 characters'),
+      altPhoneNumber: yup.string().length(11, 'Must be exactly 11 characters'),
       nationality: yup.string().required('Required'),
       state: yup.string().required('Required'),
     }),
@@ -186,7 +186,9 @@ const ScoutSignupForm = () => {
           <div className="flex-1">
             <label className="label">
               Profile Image.{' '}
-              <small className="text-xs">Format (png) - 2MB max</small>
+              <small className="text-xs">
+                Format (png, jpeg, jpg) - 50MB max
+              </small>
             </label>
             <div className="relative">
               <input

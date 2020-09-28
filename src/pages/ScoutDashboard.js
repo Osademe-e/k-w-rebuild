@@ -56,7 +56,7 @@ const ScoutDashboard = () => {
     }
 
     // validate file
-    const validateFile = fileChecker(file, 2100000, [
+    const validateFile = fileChecker(file, 51000000, [
       'image/jpeg',
       'image/png',
       'image/jpg',

@@ -62,7 +62,7 @@ const PostNewsForm = () => {
     setTempSrc(null);
     const file = e.target.files[0];
     if (file) {
-      const validateFile = fileChecker(file, 2100000, [
+      const validateFile = fileChecker(file, 51000000, [
         'image/jpeg',
         'image/png',
         'image/jpg',
@@ -204,7 +204,9 @@ const PostNewsForm = () => {
               <div className="flex-1">
                 <label className="label">
                   Profile Image.{' '}
-                  <small className="text-xs">Format (png) - 2MB max</small>
+                  <small className="text-xs">
+                    Format (png, jpeg, jpg) - 50MB max
+                  </small>
                 </label>
                 <div className="relative">
                   <input

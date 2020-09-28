@@ -242,7 +242,7 @@ const Details = ({ details, collection }) => {
         const comment = {
           comment: value.comment,
           createdAt: timestamp(),
-          name: user.displayName,
+          name: user.displayName || `${profile?.doc?.lastName} ${profile?.doc?.firstName}`,
           id: user.uid,
         };
 

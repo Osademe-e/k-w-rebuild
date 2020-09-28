@@ -25,7 +25,9 @@ import { timestamp } from '../config/fbConfig';
 
 const ScoutProfile = ({ profile }) => {
   // context
-  const { user, toogleModal, toogleToast } = useContext(AppContext);
+  const { user, toogleModal, toogleToast, profile: userProfile } = useContext(
+    AppContext
+  );
 
   // hooks
   const firestore = useFirestore();
@@ -52,9 +54,9 @@ const ScoutProfile = ({ profile }) => {
       email: yup.string().email('Invalid Email Address').required('Required'),
       phoneNumber: yup
         .string()
-        .length(10, 'Must be exactly 11 characters')
+        .length(11, 'Must be exactly 11 characters')
         .required('Required'),
-      altPhoneNumber: yup.string().length(10, 'Must be exactly 11 characters'),
+      altPhoneNumber: yup.string().length(11, 'Must be exactly 11 characters'),
       nationality: yup.string().required('Required'),
       state: yup.string().required('Required'),
     }),
@@ -199,106 +201,113 @@ const ScoutProfile = ({ profile }) => {
                   ) : null}
                 </motion.div>
 
-                {/* phone number */}
-                <motion.div layout className="form-control">
-                  <label
-                    htmlFor="phoneNumber"
-                    className={`${
-                      !editting
-                        ? 'text-sm font-semibold mb-2 text-primary-900'
-                        : 'label'
-                    }`}>
-                    <div className="flex items-center">
-                      <i className="material-icons mr-1">phone</i>
-                      Phone Number
-                    </div>
-                  </label>
-                  <input
-                    id="phoneNumber"
-                    name="phoneNumber"
-                    type="number"
-                    disabled={!editting}
-                    className={`${
-                      !editting
-                        ? 'appearance-none w-full py-2 px-2 outline-none text-xs'
-                        : 'input-field focus:border focus:border-primary-900 placeholder-primary-800 placeholder-opacity-25'
-                    }`}
-                    placeholder="08011111111"
-                    {...scoutForm.getFieldProps('phoneNumber')}
-                  />
-                  {scoutForm.touched.phoneNumber &&
-                  scoutForm.errors.phoneNumber ? (
-                    <FormError error={scoutForm.errors.phoneNumber} />
-                  ) : null}
-                </motion.div>
+                {(user?.uid === id ||
+                  userProfile?.doc?.role === 'super admin') && (
+                  <>
+                    {/* phone number */}
+                    <motion.div layout className="form-control">
+                      <label
+                        htmlFor="phoneNumber"
+                        className={`${
+                          !editting
+                            ? 'text-sm font-semibold mb-2 text-primary-900'
+                            : 'label'
+                        }`}>
+                        <div className="flex items-center">
+                          <i className="material-icons mr-1">phone</i>
+                          Phone Number
+                        </div>
+                      </label>
+                      <input
+                        id="phoneNumber"
+                        name="phoneNumber"
+                        type="number"
+                        disabled={!editting}
+                        className={`${
+                          !editting
+                            ? 'appearance-none w-full py-2 px-2 outline-none text-xs'
+                            : 'input-field focus:border focus:border-primary-900 placeholder-primary-800 placeholder-opacity-25'
+                        }`}
+                        placeholder="08011111111"
+                        {...scoutForm.getFieldProps('phoneNumber')}
+                      />
+                      {scoutForm.touched.phoneNumber &&
+                      scoutForm.errors.phoneNumber ? (
+                        <FormError error={scoutForm.errors.phoneNumber} />
+                      ) : null}
+                    </motion.div>
 
-                {/* alt phone number */}
-                <motion.div layout className="form-control">
-                  <label
-                    htmlFor="altPhoneNumber"
-                    className={`${
-                      !editting
-                        ? 'text-sm font-semibold mb-2 text-primary-900'
-                        : 'label'
-                    }`}>
-                    <div className="flex items-center">
-                      <i className="material-icons mr-1">phone</i>
-                      Alternate Phone Number
-                    </div>
-                  </label>
-                  <input
-                    id="altPhoneNumber"
-                    name="altPhoneNumber"
-                    disabled={!editting}
-                    type="number"
-                    className={`${
-                      !editting
-                        ? 'appearance-none w-full py-2 px-2 outline-none text-xs'
-                        : 'input-field focus:border focus:border-primary-900 placeholder-primary-800 placeholder-opacity-25'
-                    }`}
-                    placeholder="08011111111"
-                    {...scoutForm.getFieldProps('altPhoneNumber')}
-                  />
-                  {scoutForm.touched.altPhoneNumber &&
-                  scoutForm.errors.altPhoneNumber ? (
-                    <FormError error={scoutForm.errors.altPhoneNumber} />
-                  ) : null}
-                </motion.div>
+                    {/* alt phone number */}
+                    <motion.div layout className="form-control">
+                      <label
+                        htmlFor="altPhoneNumber"
+                        className={`${
+                          !editting
+                            ? 'text-sm font-semibold mb-2 text-primary-900'
+                            : 'label'
+                        }`}>
+                        <div className="flex items-center">
+                          <i className="material-icons mr-1">phone</i>
+                          Alternate Phone Number
+                        </div>
+                      </label>
+                      <input
+                        id="altPhoneNumber"
+                        name="altPhoneNumber"
+                        disabled={!editting}
+                        type="number"
+                        className={`${
+                          !editting
+                            ? 'appearance-none w-full py-2 px-2 outline-none text-xs'
+                            : 'input-field focus:border focus:border-primary-900 placeholder-primary-800 placeholder-opacity-25'
+                        }`}
+                        placeholder="08011111111"
+                        {...scoutForm.getFieldProps('altPhoneNumber')}
+                      />
+                      {scoutForm.touched.altPhoneNumber &&
+                      scoutForm.errors.altPhoneNumber ? (
+                        <FormError error={scoutForm.errors.altPhoneNumber} />
+                      ) : null}
+                    </motion.div>
 
-                {/* residential address */}
-                <motion.div layout className="form-control">
-                  <label
-                    htmlFor="residentialAddress"
-                    className={`${
-                      !editting
-                        ? 'text-sm font-semibold mb-2 text-primary-900'
-                        : 'label'
-                    }`}>
-                    <div className="flex items-center">
-                      <i className="material-icons mr-1">my_location</i>
-                      Residential Address
-                    </div>
-                  </label>
-                  <textarea
-                    name="residentialAddress"
-                    id="residentialAddress"
-                    rows="5"
-                    disabled={!editting}
-                    className={`${
-                      !editting
-                        ? 'appearance-none w-full py-2 px-2 outline-none text-xs'
-                        : 'input-field focus:border focus:border-primary-900 placeholder-primary-800 placeholder-opacity-25'
-                    }`}
-                    placeholder="# street, city"
-                    {...scoutForm.getFieldProps(
-                      'residentialAddress'
-                    )}></textarea>
+                    {/* residential address */}
+                    <motion.div layout className="form-control">
+                      <label
+                        htmlFor="residentialAddress"
+                        className={`${
+                          !editting
+                            ? 'text-sm font-semibold mb-2 text-primary-900'
+                            : 'label'
+                        }`}>
+                        <div className="flex items-center">
+                          <i className="material-icons mr-1">my_location</i>
+                          Residential Address
+                        </div>
+                      </label>
+                      <textarea
+                        name="residentialAddress"
+                        id="residentialAddress"
+                        rows="5"
+                        disabled={!editting}
+                        className={`${
+                          !editting
+                            ? 'appearance-none w-full py-2 px-2 outline-none text-xs'
+                            : 'input-field focus:border focus:border-primary-900 placeholder-primary-800 placeholder-opacity-25'
+                        }`}
+                        placeholder="# street, city"
+                        {...scoutForm.getFieldProps(
+                          'residentialAddress'
+                        )}></textarea>
 
-                  {scoutForm.touched.residentialAddress &&
-                  scoutForm.errors.residentialAddress ? (
-                    <FormError error={scoutForm.errors.residentialAddress} />
-                  ) : null}
-                </motion.div>
+                      {scoutForm.touched.residentialAddress &&
+                      scoutForm.errors.residentialAddress ? (
+                        <FormError
+                          error={scoutForm.errors.residentialAddress}
+                        />
+                      ) : null}
+                    </motion.div>
+                  </>
+                )}
 
                 {/* nationality */}
                 <motion.div layout className="form-control">

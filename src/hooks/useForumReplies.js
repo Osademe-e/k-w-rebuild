@@ -20,7 +20,7 @@ export default (forumDoc, commentDoc, limit, page) => {
           .doc(commentDoc)
           .collection('replies')
           .limit(limit)
-          .orderBy('createdAt', 'desc')
+          .orderBy('createdAt', 'asc')
           .startAfter(page)
           .onSnapshot(
             (snapshots) => {
@@ -61,7 +61,7 @@ export default (forumDoc, commentDoc, limit, page) => {
           .doc(commentDoc)
           .collection('replies')
           .limit(limit)
-          .orderBy('createdAt', 'desc')
+          .orderBy('createdAt', 'asc')
           .onSnapshot(
             (snapshots) => {
               let ordered = [];

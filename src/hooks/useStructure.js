@@ -145,6 +145,11 @@ const useStructure = (leagues, country, league, type, count = 20) => {
                   year: data?.year,
                   logo: data?.logo,
                   fixtures: data?.fixtures
+                    .filter(
+                      (f) =>
+                        f?.fixture?.status?.short !== 'FT' &&
+                        moment(f?.fixture?.date).diff(moment(), 'days') >= 0
+                    )
                     .slice(0, count)
                     .sort(
                       (a, b) => a?.fixture?.timestamp - b?.fixture?.timestamp
@@ -180,7 +185,12 @@ const useStructure = (leagues, country, league, type, count = 20) => {
                     logo: league?.logo,
                     fixtures: league?.fixtures
                       .filter((f) => f?.fixture?.status?.short === 'FT')
-                      .slice(0, 15)
+                      .filter(
+                        (f) =>
+                          moment().diff(f?.fixture?.date, 'days') >= 0 &&
+                          moment().diff(f?.fixture?.date, 'days') <= 7
+                      )
+                      .slice(-15)
                       .sort(
                         (a, b) => a?.fixture?.timestamp - b?.fixture?.timestamp
                       ),
@@ -218,7 +228,12 @@ const useStructure = (leagues, country, league, type, count = 20) => {
                       logo: league?.logo,
                       fixtures: league?.fixtures
                         .filter((f) => f?.fixture?.status?.short === 'FT')
-                        .slice(0, 15)
+                        .filter(
+                          (f) =>
+                            moment().diff(f?.fixture?.date, 'days') >= 0 &&
+                            moment().diff(f?.fixture?.date, 'days') <= 7
+                        )
+                        .slice(-15)
                         .sort(
                           (a, b) =>
                             a?.fixture?.timestamp - b?.fixture?.timestamp
@@ -254,7 +269,12 @@ const useStructure = (leagues, country, league, type, count = 20) => {
                       logo: league?.logo,
                       fixtures: league?.fixtures
                         .filter((f) => f?.fixture?.status?.short === 'FT')
-                        .slice(0, 15)
+                        .filter(
+                          (f) =>
+                            moment().diff(f?.fixture?.date, 'days') >= 0 &&
+                            moment().diff(f?.fixture?.date, 'days') <= 7
+                        )
+                        .slice(-15)
                         .sort(
                           (a, b) =>
                             a?.fixture?.timestamp - b?.fixture?.timestamp

@@ -4,12 +4,16 @@ import { Link } from 'react-router-dom';
 import './styles/Footer.css';
 
 import footerLogo from '../assets/images/logo svg/Asset 20.svg';
+import facebookIcon from '../assets/icons/facebookIcon.svg';
+import youtubeIcon from '../assets/icons/17232598641556105346.svg';
+import twitterIcon from '../assets/icons/17998766861556105338.svg';
+import instagramIcon from '../assets/icons/19042250241579774616.svg';
 
 const Footer = () => {
   return (
     <footer className="text-primary-100 mt-2">
       <div className="social-links">
-        <div className="lg:container mx-auto px-2 lg:px-0 py-3 flex items-center justify-around text-sm">
+        <div className="lg:container mx-auto px-2 lg:px-0 py-3 flex justify-around text-sm">
           <div>
             <img src={footerLogo} alt="logo" className="w-32 mb-3" />
             <ul>
@@ -28,18 +32,48 @@ const Footer = () => {
             <h1 className="uppercase font-semibold text-lg mb-3 mt-3">
               Social
             </h1>
-            <ul>
+            <ul className="flex items-center justify-evenly">
               <li className="mb-2 hover:font-semibold">
-                <Link to="/">Facebook</Link>
+                <a
+                  href="https://www.facebook.com/kingsportsProo"
+                  target="_bank">
+                  <img
+                    src={facebookIcon}
+                    alt="facebook icon"
+                    className="w-8 h-8 rounded-full mr-1"
+                  />
+                </a>
               </li>
               <li className="mb-2 hover:font-semibold">
-                <Link to="/talents">Twitter</Link>
+                <a href="https://www.twitter.com/Kingsports_Pro" target="_bank">
+                  <img
+                    src={twitterIcon}
+                    alt="twitter icon"
+                    className="w-8 h-8 rounded-full mr-1"
+                  />
+                </a>
               </li>
               <li className="mb-2 hover:font-semibold">
-                <Link to="/news">Instagram</Link>
+                <a
+                  href="https://www.instagram.com/_kingsports_pro/"
+                  target="_bank">
+                  <img
+                    src={instagramIcon}
+                    alt="instagram icon"
+                    className="w-8 h-8 rounded-full mr-1"
+                  />
+                </a>
               </li>
               <li className="mb-2 hover:font-semibold">
-                <Link to="/news">Youtube</Link>
+                <a
+                  href="https://www.youtube.com/channel/UCG1seQScR6ocNP0CkoBWSlA?view_as=subscriber"
+                  target="_bank">
+                  <img
+                    src={youtubeIcon}
+                    alt="youtube icon"
+                    className="w-8 h-8 rounded-full mr-1"
+                  />
+                </a>
               </li>
             </ul>
           </div>
