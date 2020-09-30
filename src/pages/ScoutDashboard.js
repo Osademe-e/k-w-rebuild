@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { motion } from 'framer-motion';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams, useHistory, Redirect } from 'react-router-dom';
 import moment from 'moment';
 
 // context
@@ -159,7 +159,13 @@ const ScoutDashboard = () => {
     }
   };
 
-  return (
+  return profile && profile.fetching ? (
+    <Loader />
+  ) : profile && profile?.doc?.role !== 'super admin' ? (
+    <motion.div exit="undefined">
+      <Redirect to="/404" />
+    </motion.div>
+  ) : (
     <motion.div
       variants={pageAnim}
       initial="hidden"

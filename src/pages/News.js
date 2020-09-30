@@ -97,8 +97,15 @@ const News = () => {
                   onChange={changeCategory}>
                   <option>All</option>
                   <option>General</option>
+                  <option>Transfer News</option>
+                  <option>Italian Seria A</option>
+                  <option>German Bundesliga</option>
                   {leagues?.ordered?.map((league) => (
-                    <option key={league.id}>{league.name}</option>
+                    <option key={league.id} value={league.name}>
+                      {league.name === 'Primera Division'
+                        ? 'Spanish La liga'
+                        : league.name}
+                    </option>
                   ))}
                 </select>
                 <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">

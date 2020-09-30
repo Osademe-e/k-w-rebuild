@@ -27,7 +27,7 @@ import PostForm from './components/PostForm';
 import EditPostForm from './components/EditPostForm';
 import PremiumPostForm from './components/PremiumPostForm';
 import EditPremiumPost from './components/EditPremiumPostForm';
-import UnfeatureTalent from './components/UnfeatureTalent'
+import UnfeatureTalent from './components/UnfeatureTalent';
 
 // pages
 import HomePage from './pages/Home';
@@ -46,7 +46,7 @@ import NotFound from './pages/NotFound';
 import TalentSignupPage from './pages/TalentSignup';
 import TalentDashboardPage from './pages/TalentDashboard';
 import ScoutDashboardPage from './pages/ScoutDashboard';
-import ScoutSignupPage from './pages/ScoutSignup';
+// import ScoutSignupPage from './pages/ScoutSignup';
 import FixturesPage from './pages/Fixtures';
 
 // context API to make some application state globally accessible (works like redux)
@@ -197,9 +197,9 @@ function App() {
               />
 
               {/* ScoutSignupPage */}
-              <PrivateRoute exact path="/scout-signup" user={user}>
+              {/* <PrivateRoute exact path="/scout-signup" user={user}>
                 <ScoutSignupPage />
-              </PrivateRoute>
+              </PrivateRoute> */}
 
               {/* talentSignup */}
               <PrivateRoute exact path="/talent-signup" user={user}>
@@ -221,18 +221,14 @@ function App() {
               />
 
               {/* scout dashboard page */}
-              <Route
-                exact
-                path="/scouts/:id"
-                render={(props) => <ScoutDashboardPage {...props} />}
-              />
+              <PrivateRoute exact path="/scouts/:id" user={user}>
+                <ScoutDashboardPage />
+              </PrivateRoute>
 
               {/* scout page */}
-              <Route
-                exact
-                path="/scouts"
-                render={(props) => <ScoutsPage {...props} />}
-              />
+              <PrivateRoute exact path="/scouts" user={user}>
+                <ScoutsPage />
+              </PrivateRoute>
 
               {/* premium page */}
               <Route

@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+// import { useLocation } from 'react-router-dom';
 
 // app context
 import { AppContext } from '../App';
@@ -11,14 +11,14 @@ import useFirestoreDoc from '../hooks/useFirestoreDoc';
 import Loader from './Loader';
 import PageError from './PageError';
 
-import logo from '../assets/images/logo svg/Asset 20.svg';
+// import logo from '../assets/images/logo svg/Asset 20.svg';
 
 const DashboardScout = () => {
   const { user, profile } = useContext(AppContext);
 
   //   location
-  const location = useLocation();
-  const from = { from: { pathname: location.pathname } };
+  // const location = useLocation();
+  // const from = { from: { pathname: location.pathname } };
 
   //   hook
   const { doc, error, fetching } = useFirestoreDoc('scouts', user?.uid);
@@ -52,7 +52,7 @@ const DashboardScout = () => {
               </div>
             )}
           </div>
-          {doc.approved && (
+          {/* {doc.approved && (
             <div className="flex items-center justify-between py-2 border-t border-gray-200 px-2 text-primary-100 bg-gray-800 text-semibold">
               <p className="font-semibold text-xs uppercase">View Profile</p>
               <Link
@@ -61,7 +61,7 @@ const DashboardScout = () => {
                 <span className="material-icons ">visibility</span>
               </Link>
             </div>
-          )}
+          )} */}
         </>
       )}
       {fetching && !doc && <Loader />}
@@ -77,18 +77,18 @@ const DashboardScout = () => {
       <div className="p-2 border-b border-gray-700">
         Kingsports has proffesional scouting agents registered on the platform
         looking/scouting for grass-root talents to play at international levels.
-        Are you a scout and would like to join the Kingsports platform?, click
-        on the register button or{' '}
-        <Link
+        Are you a scout and would like to join the Kingsports platform?,
+        download our app to register.
+        {/* <Link
           to={{
             pathname: '/scouts',
             state: from,
           }}
           className="text-primary-500">
           see registered scouts on our platform
-        </Link>
+        </Link> */}
       </div>
-      <div className="p-2 flex items-center justify-between">
+      {/* <div className="p-2 flex items-center justify-between">
         <img src={logo} alt="logo" className="w-20" />
         <Link
           to={{
@@ -98,7 +98,7 @@ const DashboardScout = () => {
           className="btn bg-secondary">
           Register
         </Link>
-      </div>
+      </div> */}
     </div>
   );
 };

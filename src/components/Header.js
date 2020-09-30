@@ -214,7 +214,7 @@ const Header = ({ featuredTalents }) => {
                         Talents
                       </NavLink>
                     </li>
-                    <li
+                    {/* <li
                       className={`flex lg:block text-base lg:text-sm py-2 lg:py-0 lg:mr-3 hover:font-semibold hover:text-primary-900`}>
                       <span className="material-icons mr-2 lg:hidden">
                         local_fire_department
@@ -228,7 +228,7 @@ const Header = ({ featuredTalents }) => {
                         }}>
                         Scouts
                       </NavLink>
-                    </li>
+                    </li> */}
                     <li
                       className={`flex lg:block text-base lg:text-sm py-2 lg:py-0 lg:mr-3 hover:font-semibold hover:text-primary-900`}>
                       {/* <img

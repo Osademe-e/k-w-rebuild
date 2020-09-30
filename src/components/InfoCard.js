@@ -15,7 +15,9 @@ const InfoCard = ({ info, collection }) => {
             className="shadow overflow-hidden flex sm:flex-col relative"
             key={n.id}>
             <span className="absolute top-0 right-0 hidden md:inline text-secondary sm:text-primary-800 sm:shadow text-xs px-2 py-1 z-10 font-semibold  bg-transparent sm:bg-primary-400">
-              {n.category}
+              {n.category === 'Primera Division'
+                ? 'Spanish La liga'
+                : n.category}
             </span>
             <div className="w-2/5 sm:w-full">
               <img

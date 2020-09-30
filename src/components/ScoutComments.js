@@ -124,7 +124,7 @@ const ScoutComments = ({ comments }) => {
               Scout Comments
             </motion.h1>
 
-            {user?.uid &&
+            {/* {user?.uid &&
               profile?.doc?.subscriptions?.scout &&
               !comments?.[user?.uid] &&
               !showForm && (
@@ -133,7 +133,7 @@ const ScoutComments = ({ comments }) => {
                   onClick={() => setShowForm((prevState) => !prevState)}>
                   add_comment
                 </span>
-              )}
+              )} */}
           </motion.div>
 
           {/* body */}
@@ -207,11 +207,11 @@ const ScoutComments = ({ comments }) => {
                         className="w-10 h-10 object-cover object-top rounded-full mr-2"
                       />
                       <div className="flex-1">
-                        <Link
-                          to={`/scouts/${scoutId}`}
+                        <p
+                          // to={`/scouts/${scoutId}`}
                           className="block text-xs font-semibold leading-3">
                           {data?.[scoutId].fullName}
-                        </Link>
+                        </p>
                         <small className="text-xs opacity-75">
                           {moment(
                             comments?.[scoutId]?.updatedAt?.toDate()
@@ -220,11 +220,11 @@ const ScoutComments = ({ comments }) => {
                       </div>
                     </div>
                     <div
-                      className="pt-3 border-t border-gray-100 text-sm"
+                      className="pt-1 text-sm"
                       dangerouslySetInnerHTML={{
                         __html: comments[scoutId].comment,
                       }}></div>
-                    {user?.uid === scoutId && (
+                    {/* {user?.uid === scoutId && (
                       <div className="flex items-center justify-evenly text-xs border-t border-gray-100 pt-3 mt-3">
                         <span
                           className="material-icons opacity-50 cursor-pointer hover:text-secondary hover:opacity-100"
@@ -247,7 +247,7 @@ const ScoutComments = ({ comments }) => {
                           delete_forever
                         </span>
                       </div>
-                    )}
+                    )} */}
                   </div>
                 ))}
             </motion.div>

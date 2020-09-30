@@ -69,7 +69,9 @@ const AdminLeague = ({ league }) => {
           alt="league logo"
           className="w-8 h-8 rounded-full shadow-md"
         />
-        <p className="text-xs font-semibold ml-2">{league.name}</p>
+        <p className="text-xs font-semibold ml-2">
+          {league.name === 'Primera Division' ? 'Spanish La liga' : league.name}
+        </p>
       </div>
       <span
         className="cursor-pointer text-xs text-primary-100 bg-secondary rounded py-2 px-3 hover:shadow font-semibold"

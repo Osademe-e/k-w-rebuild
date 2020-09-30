@@ -38,7 +38,7 @@ const NewsDetails = () => {
               <small className="p-2 bg-primary-500 text-primary-900 text-xs rounded">
                 Posted:{' '}
                 {moment(doc?.createdAt?.toDate()).format('ddd MMM YYYY')} by{' '}
-                {doc?.createdBy?.name.split(' ')[1].toUpperCase()}
+                {doc?.createdBy?.name.split(' ')[0].toUpperCase()}
               </small>
             </>
           )}

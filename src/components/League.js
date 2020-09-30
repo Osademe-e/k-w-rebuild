@@ -21,7 +21,7 @@ const League = ({ country, data, type }) => {
             onClick={() =>
               history.push(`/${type ? type : 'fixtures'}?league=${data.name}`)
             }>
-            {data.name}
+            {data.name === 'Primera Division' ? 'Spanish La liga' : data.name}
           </span>
           &nbsp;
           <small

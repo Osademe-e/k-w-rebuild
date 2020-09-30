@@ -1,5 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { motion } from 'framer-motion';
+import { Redirect } from 'react-router-dom';
+
+import { AppContext } from '../App';
 
 // components
 import HeroContainer from '../components/HeroContainer';
@@ -13,6 +16,7 @@ import { pageAnim, errorDisplayHandler } from '../utils/_helpers';
 import useFiltersAndPagination from '../hooks/useFiltersAndPagination';
 
 const Scouts = () => {
+  const { profile } = useContext(AppContext);
   const [page, setPage] = useState(null);
 
   // limit
@@ -34,7 +38,13 @@ const Scouts = () => {
     }
   );
 
-  return (
+  return profile && profile.fetching ? (
+    <Loader />
+  ) : profile?.doc?.role !== 'super admin' ? (
+    <motion.div exit="undefined">
+      <Redirect to="/404" />
+    </motion.div>
+  ) : (
     <motion.div
       variants={pageAnim}
       initial="hidden"
