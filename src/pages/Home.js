@@ -99,7 +99,7 @@ const Home = ({ featuredTalents }) => {
                   </div>
                   <div className="px-2">
                     <p className="text-xs font-bold py-1 sm:py-4 opacity-50">
-                      {moment(n?.createdAt?.toDate()).format('MMMM d YYYY')}
+                      {moment(n?.createdAt?.toDate()).format('MMMM DD YYYY')}
                     </p>
                     <Link
                       to={`/news/${n.id}`}

@@ -18,35 +18,38 @@ const About = () => {
           About Us
         </h2>
       </HeroContainer>
-      <div className="lg:container px-2 lg:px-0 text-primary-900 mx-auto my-10">
+      <div className="lg:w-1/2 px-2 lg:px-0 text-primary-900 mx-auto my-10">
         <section className="mb-3">
           <h2 className="text-xl lg:text-3xl">Company Profile</h2>
           <p className="text-sm lg:text-base leading-relaxed">
-            Kingsports is a sports company dully registered with the Nigerian
-            Corporate Affairs Commission (CAC) in 2016. Started Operations in
-            2019. Created in concomitance with the modern technological trend,
-            Kingsports is a sport-tech company that proffers solutions to issues
-            affecting the modern day footballing system.
+            Kingsports is a Sports-Tech company dully registered with the
+            Nigerian Corporate Affairs Commission (CAC) in 2016. Started
+            Operations in 2019. Created in concomitance with the modern
+            technological trend, We proffers solutions to issues affecting the
+            modern day footballing system.
           </p>
         </section>
         <section className="mb-3">
           <h2 className="text-xl lg:text-3xl">Our Mission</h2>
           <p className="text-sm lg:text-base leading-relaxed">
-            To become the leading sports company in Africa, to become the best
-            football pundit in the world. We envision a strong football player
-            profiling system where highly talented grass-root footballers around
-            the world can project themselves and get signed by clubs around the
-            world.
+            Our mission is to build a suitable, reliable and sustainable online
+            platform (iOS and Android mobile application) for 24 hours sports
+            news, discussions (forum),football fixtures/results, live scores and
+            punditry with the help of Artificial Intelligence(AI) and sequential
+            data calculation and analysis. Our app offers a strong database
+            system for player profiling thereby curbing age cheat in Africa,
+            including knowing, tracking and signing grassroots players at young
+            age .
           </p>
         </section>
         <section className="mb-3">
           <h2 className="text-xl lg:text-3xl">Our Vision</h2>
           <p className="text-sm lg:text-base leading-relaxed">
-            Our mission is to build a strong suitable, reliable and sustainable
-            online platform (iOS and Android mobile application) for 24 hours
-            sports news, football fixtures/results, live scores, football
-            pundits and using the block chain technology for player's profiling
-            thereby curbing age cheat in Nigeria and Africa football system.
+            Our vision entails becoming the leading sports company in the World,
+            We envision a strong grassroot player profiling system where highly
+            talented footballers around the world especially in Africa can
+            project themselves and get signed by professional clubs, we are
+            everything football.
           </p>
         </section>
       </div>

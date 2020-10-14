@@ -21,6 +21,8 @@ import PremiumPost from '../components/PremiumPost';
 
 import { pageAnim, errorDisplayHandler } from '../utils/_helpers';
 
+import { PaystackPublicKey } from '../config/config';
+
 const Premium = () => {
   const { user, profile, authLoaded } = useContext(AppContext);
   const [page, setPage] = useState(null);
@@ -30,7 +32,7 @@ const Premium = () => {
     reference: cryptoRandomString({ length: 15 }),
     email: user?.email,
     amount: 2000000,
-    publicKey: 'pk_test_820c17e4a0b7e7b92d0a8020a1831dd5cb9ede57',
+    publicKey: PaystackPublicKey,
     metadata: {
       userId: user?.uid,
     },
@@ -105,6 +107,12 @@ const Premium = () => {
               <div className="flex justify-between items-center mt-3 text-sm">
                 <p>One Month Subscription</p>
                 <p>&#x20A6; 20,000</p>
+              </div>
+              <div className="mt-3 text-sm">
+                <p>
+                  This website require you to be 18 years or age or older to
+                  subscribe.
+                </p>
               </div>
               {!user && (
                 <Link

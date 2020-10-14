@@ -6,6 +6,8 @@ import cryptoRandomString from 'crypto-random-string';
 // context
 import { AppContext } from '../App';
 
+import { PaystackPublicKey } from '../config/config';
+
 import kingsportsIcon from '../assets/images/logo svg/Asset 19.svg';
 
 const DashboardPremium = () => {
@@ -16,7 +18,7 @@ const DashboardPremium = () => {
     reference: cryptoRandomString({ length: 15 }),
     email: user?.email,
     amount: 2000000,
-    publicKey: 'pk_test_820c17e4a0b7e7b92d0a8020a1831dd5cb9ede57',
+    publicKey: PaystackPublicKey,
     metadata: {
       userId: user?.uid,
     },
@@ -57,6 +59,12 @@ const DashboardPremium = () => {
         <div className="flex justify-between items-center mt-3 text-sm">
           <p>One Month Subscription</p>
           <p>&#x20A6; 20,000</p>
+        </div>
+        <div className="mt-3 text-sm">
+          <p>
+            This website require you to be 18 years or age or older to
+            subscribe.
+          </p>
         </div>
         <button
           className="btn mt-3 w-full bg-secondary"

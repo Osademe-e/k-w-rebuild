@@ -35,6 +35,7 @@ import LoginPage from './pages/Login';
 import SignupPage from './pages/Signup';
 import DashboardPage from './pages/Dashboard';
 import AboutPage from './pages/About';
+import TermsOfServicePage from './pages/TermsOfService';
 import NewsPage from './pages/News';
 import ForumPage from './pages/Forum';
 import ForumDetailsPage from './pages/ForumDetails';
@@ -48,6 +49,7 @@ import TalentDashboardPage from './pages/TalentDashboard';
 import ScoutDashboardPage from './pages/ScoutDashboard';
 // import ScoutSignupPage from './pages/ScoutSignup';
 import FixturesPage from './pages/Fixtures';
+import PrivacyPolicyPage from './pages/PrivacyPolicy';
 
 // context API to make some application state globally accessible (works like redux)
 export const AppContext = React.createContext({
@@ -283,6 +285,18 @@ function App() {
               <Route
                 path="/about"
                 render={(props) => <AboutPage {...props} />}
+              />
+
+              {/* Terms of service page */}
+              <Route
+                path="/terms"
+                render={(props) => <TermsOfServicePage {...props} />}
+              />
+
+              {/* Privacy policy page */}
+              <Route
+                path="/privacy"
+                render={(props) => <PrivacyPolicyPage {...props} />}
               />
 
               {/* homepage */}

@@ -13,7 +13,7 @@ const Footer = () => {
   return (
     <footer className="text-primary-100 mt-2">
       <div className="social-links">
-        <div className="lg:container mx-auto px-2 lg:px-0 py-3 flex justify-around text-sm">
+        <div className="lg:container mx-auto px-2 lg:px-0 py-3 flex justify-evenly text-sm">
           <div>
             <img src={footerLogo} alt="logo" className="w-32 mb-3" />
             <ul>
@@ -27,6 +27,32 @@ const Footer = () => {
                 <Link to="/news">News</Link>
               </li>
             </ul>
+          </div>
+          <div>
+            <h1 className="uppercase font-semibold text-lg mb-3 mt-3">
+              Contact Us
+            </h1>
+            <a
+              href="mailto:support@kingsports.pro"
+              className="cursor-pointer block"
+              target="_blank"
+              rel="noopener noreferrer">
+              support@kingsports.pro
+            </a>
+            <a
+              href="mailto:admin@kingsports.pro"
+              className="cursor-pointer block"
+              target="_blank"
+              rel="noopener noreferrer">
+              admin@kingsports.pro
+            </a>
+            {/* <a
+              href="https://api.whatsapp.com/send?phone=2348120130191"
+              className="cursor-pointer"
+              target="_blank"
+              rel="noopener noreferrer">
+              call/whatsapp +2348120130191
+            </a> */}
           </div>
           <div>
             <h1 className="uppercase font-semibold text-lg mb-3 mt-3">
